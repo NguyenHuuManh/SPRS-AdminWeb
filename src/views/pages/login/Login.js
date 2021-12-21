@@ -7,10 +7,12 @@ import {
   CContainer,
   CRow
 } from "@coreui/react";
-import { Field, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
+import { isEmpty } from "lodash-es";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
+import { trimmedObject } from "src/helps/function";
 import { loginRequest } from "src/redux/modules/auth";
 import AppLoading from "src/views/components/AppLoading";
 import InputField from "src/views/components/InputField";
@@ -18,8 +20,8 @@ import InputField from "src/views/components/InputField";
 const Login = () => {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.authReducer.auth);
-
-  if (auth.isLogin) {
+  const user = localStorage.getItem("userSPRS");
+  if (auth.isLogin || !isEmpty(user)) {
     return <Redirect to="/" />;
   }
 
@@ -36,15 +38,16 @@ const Login = () => {
                   <p className="text-muted">Sign In to your account</p>
                   <Formik
                     initialValues={{
-                      username: "admin",
-                      password: "password",
+                      username: "",
+                      password: "",
                     }}
                     onSubmit={(values) => {
-                      dispatch(loginRequest(values));
+                      const objTrimmed = trimmedObject(values)
+                      dispatch(loginRequest(objTrimmed));
                     }}
                   >
                     {({ submitForm }) => (
-                      <>
+                      <Form>
                         <Field
                           component={InputField}
                           name="username"
@@ -54,6 +57,7 @@ const Login = () => {
                           component={InputField}
                           name="password"
                           iconName="cil-lock-locked"
+                          type="password"
                         />
                         <CRow>
                           <CCol xs="6">
@@ -63,6 +67,7 @@ const Login = () => {
                               onClick={() => {
                                 submitForm();
                               }}
+                              type="submit"
                             >
                               Login
                             </CButton>
@@ -76,7 +81,7 @@ const Login = () => {
                             </Link>
                           </CCol>
                         </CRow>
-                      </>
+                      </Form>
                     )}
                   </Formik>
                 </CCardBody>

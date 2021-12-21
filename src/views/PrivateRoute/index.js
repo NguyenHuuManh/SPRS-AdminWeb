@@ -8,6 +8,7 @@ const PrivateRoute = (props) => {
   const user = JSON.parse(window.localStorage.getItem("userSPRS"));
 
   // Render
+  console.log('isAuthen', auth?.isLogin || (!isEmpty(user) && !isUndefined(user) && !isNull(user)));
   if (auth?.isLogin || (!isEmpty(user) && !isUndefined(user) && !isNull(user))) {
     // httpServices.attachTokenToHeader(user)
     return <Route {...props} />;

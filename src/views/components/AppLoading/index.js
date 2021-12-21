@@ -1,8 +1,8 @@
 import ReactLoading from "react-loading";
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default (props) => {
-    if (props?.isOpen) {
+export default ({ isOpen }) => {
+    if (isOpen) {
         return (
             <div
                 className="loading-container "

@@ -4,15 +4,15 @@ import * as type from "../../type";
 function* getProfile() {
   const response = yield apiGetProfile()
     .then((e) => {
-      console.log("e", e.body);
-      return e;
+      console.log("e", e.data);
+      return e.data;
     })
-    .finally(() => {});
+    .finally(() => { });
   try {
-    if (response?.code == 200) {
+    if (response?.code == '200') {
       yield put({
         type: type.REQUEST_GET_PROFILE_SUCCESS,
-        payload: response.data,
+        payload: response.obj,
       });
     } else {
       yield put({ type: type.REQUEST_GET_PROFILE_FAILED, error: response.err });

@@ -1,35 +1,63 @@
 import {
   CButton,
   CCard,
-  CCardBody, CCol,
+  CCardBody, CCardHeader, CCol,
   CContainer,
   CForm, CRow
 } from '@coreui/react'
 import { Field, Formik } from 'formik'
 import React, { useState } from 'react'
-import { apiSigup } from 'src/apiFunctions/authencation'
+import { useHistory } from 'react-router'
+import { apiGetOtpSignup, apiOtpPassword, apiSigup } from 'src/apiFunctions/authencation'
+import AppDatePicker from 'src/views/components/AppDatePicker'
+import AppSelectGroupsRegister from 'src/views/components/AppSelectGroupsRegister'
+import AppSelectHuyen from 'src/views/components/AppSelectHuyen'
+import AppSelectTinh from 'src/views/components/AppSelectTinh'
+import AppSelectXa from 'src/views/components/AppSelectXa'
+import AppTimePicker from 'src/views/components/AppTimePicker'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
+import InputMaskField from 'src/views/components/InputMaskField'
 import Mappicker from 'src/views/components/Mappicker'
+import OtpVerify from './OtpVerify'
 import { register } from './validate'
 
 const Register = () => {
   const [orgAdress, setOrgAdress] = useState({});
-  const singup = (values) => {
-    apiSigup(values).then((res) => {
-      console.log("resSignup", res);
-      if (res.status == 200 && res.data.code == "200") {
+  const [tinh, setTinh] = useState({});
+  const [huyen, setHuyen] = useState({});
+  const history = useHistory();
+  const [otpModal, setOtpModal] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [body, setBody] = useState({});
+  const [timeStart, setTimeStart] = useState({});
+  const [disableOTP, setDisableOTP] = useState(true);
+  const getOtp = (values) => {
+    const bodyOTP = {
+      to: '+84' + values.phone.substring(1),
+      username: values.username,
+    }
+    setLoading(true);
+    apiGetOtpSignup(bodyOTP).then((e) => {
+      console.log("GET_OTP", e);
+      if (e?.status == 200) {
+        if (e.data.code == "200") {
+          setOtpModal(true);
+          setTimeStart({ value: 1 });
+          setDisableOTP(false)
+          return;
+        }
         appToast({
-          toastOptions: { type: "success" },
-          description: "Đăng ký thành công",
+          toastOptions: { type: "error" },
+          description: e.data?.message,
         });
       } else {
         appToast({
           toastOptions: { type: "error" },
-          description: res?.data?.message || "Đăng ký không thành công, hệ thống đang bảo trì",
+          description: 'Hệ thống đang bảo trì',
         });
       }
-    })
+    }).finally(() => { setLoading(false) })
   }
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -37,26 +65,29 @@ const Register = () => {
         <CRow className="justify-content-center">
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
+              <CCardHeader>
+                <h1>Register</h1>
+              </CCardHeader>
               <CCardBody className="p-4">
                 <CForm>
-                  <h1>Register</h1>
                   <Formik
                     initialValues={{
-                      username: "Duongpt35",
-                      phone: "0966048002",
-                      password: "password",
-                      rePassWord: "password",
-                      full_name: "Phạm Tùng Dương",
-                      dob: "09/09/1999",
+                      username: "",
+                      phone: "",
+                      password: "",
+                      rePassWord: "",
+                      full_name: "",
+                      dob: "",
                       nameOrg: "",
                       city: "",
                       province: "",
                       district: "",
                       subDistrict: "",
                       addressLine: "",
-                      groupsId: "4",
+                      groupsId: "",
                       adresslineORG: "",
                       adressString: "",
+                      description: "",
                     }}
                     validateOnBlur={false}
                     validateOnChange={false}
@@ -66,35 +97,67 @@ const Register = () => {
                         username: values.username,
                         phone: values.phone,
                         password: values.password,
-                        full_name: values.full_name,
+                        full_name: values.full_name.replace(/\s\s+/g, ' '),
                         dob: values.dob,
                         address: {
-                          city: values.city || "",
-                          province: values?.province || "",
-                          district: values?.district || "",
-                          subDistrict: values?.subDistrict || "",
-                          addressLine: values?.addressLine || "",
+                          city: {
+                            code: "",
+                            id: values.city,
+                            name: "Hà Nội"
+                          },
+                          district: {
+                            code: "",
+                            id: values?.district,
+                            name: "Thạch Thất"
+                          },
+                          subDistrict: {
+                            code: "",
+                            id: values?.subDistrict,
+                            name: "Tân Xã",
+                          },
+                          addressLine: values?.addressLine,
                         },
                         groups_user: [{ id: values.groupsId }],
                         organization: {
-                          name: values?.nameOrg || "",
+                          name: values.nameOrg.replace(/\s\s+/g, ' '),
                           founded: "",
-                          description: "",
+                          description: values?.description || "",
                           address: {
-                            city: orgAdress.city || "",
-                            province: orgAdress?.province || "",
-                            district: orgAdress?.district || "",
-                            subDistrict: orgAdress?.subDistrict || "",
-                            addressLine: values?.adresslineORG || "",
-                          }
-                        }
+                            city: {
+                              code: "",
+                              id: 0,
+                              name: orgAdress.city
+                            },
+                            district: {
+                              code: "",
+                              id: 0,
+                              name: orgAdress?.district,
+                            },
+                            subDistrict: {
+                              code: "",
+                              id: 0,
+                              name: orgAdress?.subDistrict,
+                            },
+                            addressLine: values?.adresslineORG,
+                            GPS_lati: orgAdress?.GPS_lati + "",
+                            GPS_long: orgAdress?.GPS_long + "",
+                          },
 
+                        }
                       }
-                      singup(user);
+                      setBody(user);
+                      getOtp(values);
                     }}
                   >
                     {({ submitForm }) => (
                       <>
+                        <Field
+                          horizontal
+                          component={AppSelectGroupsRegister}
+                          name="groupsId"
+                          maxTitle={170}
+                          title="Loại tài khoản"
+                        />
                         <Field
                           horizontal
                           component={InputField}
@@ -111,7 +174,7 @@ const Register = () => {
                         />
                         <Field
                           horizontal
-                          component={InputField}
+                          component={InputMaskField}
                           name="phone"
                           maxTitle={170}
                           title="Số điện thoại"
@@ -119,30 +182,35 @@ const Register = () => {
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                          component={AppTimePicker}
                           name="dob"
                           title="Ngày sinh"
+                          formatDate="DD-MM-YYYY"
                         />
                         <Field
-                          maxTitle={170}
-                          horizontal
-                          component={InputField}
+                          component={AppSelectTinh}
+                          title="Tỉnh/thành phố"
                           name="city"
-                          title="Tỉnh/Thành phố"
-                        />
-                        <Field
+                          functionProps={setTinh}
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                        />
+                        <Field
+                          component={AppSelectHuyen}
+                          title="Quận/huyện"
                           name="district"
-                          title="Quận/Huyện"
-                        />
-                        <Field
+                          idTinh={tinh?.id}
+                          functionProps={setHuyen}
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                        />
+                        <Field
+                          component={AppSelectXa}
+                          title="Xã phường"
                           name="subDistrict"
-                          title="Xã/Phường"
+                          idHuyen={huyen?.id}
+                          maxTitle={170}
+                          horizontal
                         />
                         <Field
                           maxTitle={170}
@@ -160,6 +228,13 @@ const Register = () => {
                           adress={orgAdress}
                           setAdress={setOrgAdress}
                           iconName={"cil-map"}
+                        />
+                        <Field
+                          maxTitle={170}
+                          horizontal
+                          component={InputField}
+                          name="description"
+                          title="Mô tả"
                         />
                         <Field
                           maxTitle={170}
@@ -184,13 +259,21 @@ const Register = () => {
                         </CRow>
                         <CRow className="d-flex justify-content-center align-items-center">
                           <div style={{ paddingTop: 10 }}>
-                            <a href="/">Đăng nhập</a>
+                            <a href="/login">Đăng nhập</a>
                           </div>
                         </CRow>
                       </>
                     )}
                   </Formik>
-
+                  <OtpVerify
+                    isOpen={otpModal}
+                    setIsOpen={setOtpModal}
+                    body={body} getOtp={getOtp}
+                    setTimeStart={setTimeStart}
+                    timeStart={timeStart}
+                    disableOTP={disableOTP}
+                    setDisableOTP={setDisableOTP}
+                  />
                 </CForm>
               </CCardBody>
 
@@ -198,7 +281,7 @@ const Register = () => {
           </CCol>
         </CRow>
       </CContainer>
-    </div>
+    </div >
   )
 }
 

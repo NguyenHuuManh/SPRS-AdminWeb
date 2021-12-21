@@ -6,13 +6,13 @@ class Services {
   constructor() {
     this.axios = axios;
     this.interceptors = null;
-    // this.axios.defaults.withCredentials = false;
-    // this.axios.defaults.adapter = require("axios/lib/adapters/http");
-    this.axios.defaults.headers = {
-      //      "Access-Control-Allow-Headers": "*",
-      //    "Access-Control-Allow-Methods": "*",
-      // "Access-Control-Allow-Credentials": true,
-    };
+    // this.axios.defaults.headers = {
+    //   "Access-Control-Allow-Headers": "*",
+    //   "Access-Control-Allow-Methods": "*",
+    //   "Content-Type": "application/json"
+    // };
+    // this.axios.defaults.withCredentials = true;
+    // this.axios.defaults.timeout = 300000;
   }
 
   attachTokenToHeader(token) {
@@ -28,23 +28,26 @@ class Services {
     );
   }
 
-  backToDefaultHeader() { }
+  removeHeaderAuthorization = () => {
+    delete axios.defaults.headers.common["Authorization"];
+  }
 
   saveLocalStorage(data) {
-    // const { token, res } = data;
-    // const dataSave = {
-    //   token,
-    //   res,
-    // };
     window.localStorage.setItem("userSPRS", JSON.stringify(data));
   }
 
   clearLocalStorage() {
     window.localStorage.removeItem("userSPRS");
+    window.localStorage.removeItem("menu");
   }
 
   handleResponse(response, error, isSuccess, url) {
     if (isSuccess) {
+      if (response.data.code + "" == "501") {
+        localStorage.removeItem("userSPRS");
+        window.location.reload();
+        return;
+      }
       return response;
     } else {
       console.log(error.response, "err");

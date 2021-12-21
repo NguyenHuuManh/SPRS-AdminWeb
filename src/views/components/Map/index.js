@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleMap, withGoogleMap, withScriptjs } from "react-google-maps";
+import { GoogleMap, withGoogleMap, withScriptjs, } from "react-google-maps";
 
 const Map = (props) => {
 
@@ -7,9 +7,9 @@ const Map = (props) => {
         <div>
             <GoogleMap
                 {...props}
-                defaultZoom={8}
+                defaultZoom={14}
+                ref={props.refMap}
             >
-                {/* {props.children} */}
             </GoogleMap>
         </div>
     );

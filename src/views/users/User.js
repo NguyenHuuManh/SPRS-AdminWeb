@@ -19,20 +19,22 @@ const User = ({ match }) => {
             User id: {match.params.id}
           </CCardHeader>
           <CCardBody>
-            <table className="table table-striped table-hover">
-              <tbody>
-                {
-                  userDetails.map(([key, value], index) => {
-                    return (
-                      <tr key={index.toString()}>
-                        <td>{`${key}:`}</td>
-                        <td><strong>{value}</strong></td>
-                      </tr>
-                    )
-                  })
-                }
-              </tbody>
-            </table>
+            <div class="table-wrapper-scroll-y my-custom-scrollbar">
+              <table className="table table-hover">
+                <tbody>
+                  {
+                    userDetails.map(([key, value], index) => {
+                      return (
+                        <tr key={index.toString()}>
+                          <td>{`${key}:`}</td>
+                          <td><strong>{value}</strong></td>
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
           </CCardBody>
         </CCard>
       </CCol>

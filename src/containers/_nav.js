@@ -1,88 +1,81 @@
-import React from 'react'
-import CIcon from '@coreui/icons-react'
+import React from 'react';
+import { FaChartBar } from 'react-icons/fa';
+
+
 
 const _nav = [
   {
     _tag: 'CSidebarNavItem',
-    name: 'Dashboard',
-    to: '/dashboard',
-    icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+    name: 'Tổng quan',
+    to: '/',
+    icon: <FaChartBar style={{ marginRight: 10 }} />,
     badge: {
       color: 'info',
-      text: 'NEW',
     }
   },
   {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Theme']
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Colors',
-    to: '/theme/colors',
-    icon: 'cil-drop',
-  },
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Typography',
-    to: '/theme/typography',
-    icon: 'cil-pencil',
-  },
-  {
-    _tag: 'CSidebarNavTitle',
-    _children: ['Components']
-  },
-  {
     _tag: 'CSidebarNavDropdown',
-    name: 'Base',
-    route: '/base',
-    icon: 'cil-puzzle',
+    name: 'Quản lý tài khoản',
+    icon: 'cil-user',
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Breadcrumb',
-        to: '/base/breadcrumbs',
+        name: 'Yêu cầu đăng ký',
+        to: '/quan-ly-org',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Cards',
-        to: '/base/cards',
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Carousel',
-        to: '/base/carousels',
-      },
+
     ],
   },
   {
     _tag: 'CSidebarNavDropdown',
-    name: 'Buttons',
-    route: '/buttons',
-    icon: 'cil-cursor',
+    name: 'Quản lý thông báo',
+    icon: 'cil-bell',
     _children: [
       {
         _tag: 'CSidebarNavItem',
-        name: 'Buttons',
-        to: '/buttons/buttons',
+        name: 'Danh sách thông báo',
+        to: '/quan-ly-thong-bao',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Brand buttons',
-        to: '/buttons/brand-buttons',
+        name: 'Tạo thông báo',
+        to: '/gui-thong-bao',
+      },
+    ],
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Phân quyền',
+    to: '/phan-quyen',
+    icon: 'cil-bell',
+  },
+]
+
+
+export const _nav_ORK = [
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Tổng quan',
+    to: '/',
+    icon: <FaChartBar style={{ marginRight: 10 }} />,
+  },
+  {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Quản lý thành viên',
+    icon: 'cil-bell',
+    _children: [
+      {
+        _tag: 'CSidebarNavItem',
+        name: 'Tạo tài khoản thành viên',
+        to: '/register-member',
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Buttons groups',
-        to: '/buttons/button-groups',
+        name: 'Danh sách thành viên',
+        to: '/quan-ly-user',
       },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Dropdowns',
-        to: '/buttons/button-dropdowns',
-      }
     ],
   },
 ]
 
-export default _nav
+export default _nav;

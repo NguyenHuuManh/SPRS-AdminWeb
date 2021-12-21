@@ -1,5 +1,5 @@
 import React, { Suspense, useEffect } from "react";
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch, useHistory } from "react-router-dom";
 import { CContainer, CFade } from "@coreui/react";
 
 // routes config
@@ -18,7 +18,21 @@ const loading = (
 
 const TheContent = () => {
   const user = JSON.parse(window.localStorage.getItem("userSPRS"));
+  const menu = JSON.parse(localStorage.getItem('menu'));
+  const history = useHistory();
   const distpatch = useDispatch();
+  let arrtemp = [];
+  const loopMap = (array) => {
+    array.forEach(element => {
+      if (isEmpty(element.children)) {
+        arrtemp.push(element.to);
+      } else {
+        loopMap(element.children)
+      }
+    });
+    return arrtemp;
+  }
+  const navi_menu = isNull(menu) ? [] : loopMap(menu);
 
   useEffect(() => {
     if (!isEmpty(user) && !isUndefined(user) && !isNull(user)) {
@@ -26,6 +40,7 @@ const TheContent = () => {
       distpatch(getProfileRequest());
     }
   }, []);
+
   return (
     <main className="c-main">
       <CContainer fluid>
@@ -45,10 +60,14 @@ const TheContent = () => {
                       </CFade>
                     )}
                   />
+
                 )
               );
             })}
-            <Redirect from="/" to="/users" />
+            {!isEmpty(navi_menu) && (
+              <Redirect from="/" to={navi_menu.includes('/dashboard') ? '/dashboard' : '/dashboard-org'} />
+              // <Redirect to={navi_menu.includes('/dashboard') ? '/dashboard' : '/dashboard-org'} />
+            )}
           </Switch>
         </Suspense>
       </CContainer>
@@ -56,4 +75,5 @@ const TheContent = () => {
   );
 };
 
-export default React.memo(TheContent);
+// export default React.memo(TheContent);
+export default TheContent;

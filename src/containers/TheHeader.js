@@ -1,28 +1,21 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { sidebarShow } from "src/redux/modules/sidebar";
+import CIcon from "@coreui/icons-react";
 import {
-  CHeader,
-  CToggler,
-  CHeaderBrand,
+  CBreadcrumbRouter, CHeader, CHeaderBrand,
   CHeaderNav,
   CHeaderNavItem,
   CHeaderNavLink,
-  CSubheader,
-  CBreadcrumbRouter,
-  CLink,
+  CSubheader, CToggler
 } from "@coreui/react";
-import CIcon from "@coreui/icons-react";
-
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sidebarShow } from "src/redux/modules/sidebar";
 // routes config
 import routes from "../routes";
-
 import {
-  TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
-  TheHeaderDropdownTasks,
+  TheHeaderDropdown
 } from "./index";
+
+
 
 const TheHeader = () => {
   const dispatch = useDispatch();
@@ -59,15 +52,6 @@ const TheHeader = () => {
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
-        <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/users">Users</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/quan-ly-user">Quan Lý Người Dùng</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/quan-ly-org">Quan Lý Tổ Chức</CHeaderNavLink>
-        </CHeaderNavItem>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
