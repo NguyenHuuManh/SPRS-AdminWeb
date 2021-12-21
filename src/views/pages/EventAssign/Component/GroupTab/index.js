@@ -2,6 +2,7 @@ import { CButton, CCardBody, CCol, CRow, CCardHeader, CInputGroup, CInput } from
 import { isEmpty, debounce } from 'lodash-es';
 import React, { useCallback, useEffect, useState } from "react";
 import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { Card } from "reactstrap";
 import { apiAssign, apiGetAssigned, apiGetUnAssigned, apiUnAssign } from 'src/apiFunctions/Event';
 import UserTable from './UserTable';
@@ -12,37 +13,39 @@ const Group = () => {
     const [key1, setKey1] = useState('');
     const [key2, setKey2] = useState('');
 
-    const getAssigned = (key) => {
-        console.log('itemSelect', itemSelected)
+    const getAssigned = (key, itemSelected) => {
         if (!itemSelected?.id) return;
         apiGetAssigned({ rp_id: itemSelected?.id, search: key }).then((e) => {
             setDataAssigned(e.data.obj);
         })
     }
-    const getUnAssigned = (key) => {
+    const getUnAssigned = (key, itemSelected) => {
         if (!itemSelected?.id) return;
         apiGetUnAssigned({ rp_id: itemSelected?.id, search: key }).then((e) => {
             setDataUnAssigned(e.data.obj);
         })
     }
-    const debounceSearch1 = useCallback(debounce((key) => getAssigned(key), 500), []);
-    const debounceSearch2 = useCallback(debounce((key) => getUnAssigned(key), 500), []);
+    const debounceSearch1 = useCallback(debounce((key, itemSelected) => getAssigned(key, itemSelected), 500), []);
+    const debounceSearch2 = useCallback(debounce((key, itemSelected) => getUnAssigned(key, itemSelected), 500), []);
     const onChange1 = (values) => {
         setKey1(values.target.value);
-        debounceSearch1(values.target.value);
+        // console.log('itemSelect', itemSelected)
+        debounceSearch1(values.target.value, itemSelected);
     }
     const onChange2 = (values) => {
         setKey2(values.target.value);
-        debounceSearch2(values.target.value);
+        debounceSearch2(values.target.value, itemSelected);
     }
 
     const getAssign = () => {
-        getAssigned(key1);
-        getUnAssigned(key2);
+        getAssigned(key1, itemSelected);
+        getUnAssigned(key2, itemSelected);
     }
 
     useEffect(() => {
-        console.log(itemSelected, 'itemSelected')
+        // console.log(itemSelected, 'itemSelected');
+        setKey1('');
+        setKey2('')
         if (isEmpty(itemSelected) || !itemSelected) {
             setDataAssigned([]);
             setDataUnAssigned([]);
@@ -106,6 +109,7 @@ const Group = () => {
 
     }
 
+
     return (
         <CRow>
             <CCol lg={12}>
@@ -122,6 +126,7 @@ const Group = () => {
                                     placeholder="Nhập tên tài khoản . . ."
                                     onChange={onChange2}
                                     value={key2}
+                                    disabled={isEmpty(itemSelected)}
                                 />
                             </CInputGroup>
                         </div>
@@ -167,6 +172,7 @@ const Group = () => {
                                     placeholder="Nhập tên tài khoản . . ."
                                     onChange={onChange1}
                                     value={key1}
+                                    disabled={isEmpty(itemSelected)}
                                 />
                             </CInputGroup>
                         </div>

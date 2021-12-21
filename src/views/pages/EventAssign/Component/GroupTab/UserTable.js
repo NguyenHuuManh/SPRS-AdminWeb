@@ -25,7 +25,7 @@ const UserTable = (props) => {
         }
         getEvents(param).then((e) => {
             if (e?.status == 200) {
-                if (e.data.code === '200') {
+                if (e.data.code == '200') {
                     setData(e.data.obj);
                     setItemSelected({});
                 }
@@ -59,7 +59,7 @@ const UserTable = (props) => {
             <CCardHeader>
                 <CRow>
                     <CCol md={12}>
-                        Danh sách tài khoản
+                        Danh sách sự kiện
                     </CCol>
                 </CRow>
             </CCardHeader>
@@ -76,7 +76,7 @@ const UserTable = (props) => {
                                     <label className="inputTitle">Tìm kiếm</label>
                                     <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
                                         <CInput
-                                            placeholder="Nhập tên tài khoản . . ."
+                                            placeholder="Nhập tên sự kiện . . ."
                                             onChange={onChange}
                                             value={key}
                                         />

@@ -55,9 +55,9 @@ const AccountList = (props) => {
                         <th>Tên đầy đủ</th>
                         <th>Tên tài khoản</th>
                         <th>Số điện thoại</th>
-                        <th>Tên tổ chức</th>
-                        <th>Địa chỉ tổ chức</th>
-                        <th>Trạng thái</th>
+                        {/* <th>Tên tổ chức</th> */}
+                        <th>Địa chỉ</th>
+                        {/* <th>Trạng thái</th> */}
                     </thead>
                     <tbody>
                         {
@@ -72,9 +72,9 @@ const AccountList = (props) => {
                                         <td>{item?.user?.full_name}</td>
                                         <td>{item?.user?.username}</td>
                                         <td>{item?.user?.phone}</td>
-                                        <td>{item?.user?.organization?.name}</td>
-                                        <td>{item?.user?.organization?.address?.addressLine}</td>
-                                        <td>{item?.status}</td>
+                                        {/* <td>{item?.user?.organization?.name}</td> */}
+                                        <td>{item?.user?.address?.subDistrict.name + '-' + item?.user?.address?.district.name + '-' + item?.user?.address?.city.name}</td>
+                                        {/* <td>{item?.status}</td> */}
                                     </tr>
                                 )
                             })

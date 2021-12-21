@@ -13,6 +13,7 @@ import { appToast } from "src/views/components/AppToastContainer";
 import { getProfileRequest } from "src/redux/modules/profile";
 import { apiUpdate } from "src/apiFunctions/authencation";
 import { trimmedObject } from "src/helps/function";
+import AppTimePicker from "src/views/components/AppTimePicker";
 const UserTab = () => {
     const profile = useSelector((state) => state.profileReducer);
     const [tinh, setTinh] = useState(profile.data.profile?.address?.city);
@@ -100,6 +101,7 @@ const UserTab = () => {
                                         resetForm();
                                         setEditAble(false);
                                         setTinh(profile.data.profile?.address?.city);
+                                        setHuyen(profile.data.profile?.address?.district);
                                     } else {
                                         setEditAble(true);
                                     }
@@ -121,12 +123,12 @@ const UserTab = () => {
                                             </CCol>
                                         </CRow>
                                         <CRow>
-                                            <CCol md={4}>Họ và tên</CCol>
+                                            <CCol md={4}>Tên tài khoản</CCol>
                                             <CCol md={4}>
                                                 <Field
                                                     component={InputField}
                                                     name="username"
-                                                    disabled={!editAble}
+                                                    disabled={true}
                                                 />
                                             </CCol>
                                         </CRow>
@@ -136,7 +138,7 @@ const UserTab = () => {
                                                 <Field
                                                     component={InputField}
                                                     name="phone"
-                                                    isPhone
+                                                    // isPhone
                                                     disabled={!editAble}
                                                 />
                                             </CCol>
@@ -145,9 +147,10 @@ const UserTab = () => {
                                             <CCol md={4}>Ngày sinh</CCol>
                                             <CCol md={4}>
                                                 <Field
-                                                    component={AppDatePicker}
+                                                    component={AppTimePicker}
                                                     name="dob"
                                                     disabled={!editAble}
+                                                    formatDate="DD-MM-YYYY"
                                                 />
                                             </CCol>
                                         </CRow>
@@ -187,7 +190,7 @@ const UserTab = () => {
                                         </CRow>
                                     </div>
                                     {editAble && (
-                                        <CButton onClick={() => { submitForm() }}>
+                                        <CButton color="primary" onClick={() => { submitForm() }}>
                                             Lưu
                                         </CButton>
                                     )}

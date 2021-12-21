@@ -1,14 +1,14 @@
 import { CButton, CCard, CCardBody, CCol, CRow } from "@coreui/react";
 import { Field, Formik } from "formik";
 import { findIndex } from "lodash";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import AppSelectItem from "src/views/components/AppSelectItem";
 import InputField from "src/views/components/InputField";
 import { addCart } from "../validate";
 const CartTable = (props) => {
     const { items, setItems } = props
     const [itemSelected, setItemSelected] = useState({});
-    console.log('items', items)
+    const ref = useRef();
     const deleteItem = (item) => {
         const arr = items.filter(e => e.item.id !== item.item.id);
         setItems(arr);
@@ -26,7 +26,6 @@ const CartTable = (props) => {
                         <tbody>
                             {
                                 items?.map((e, index) => {
-                                    console.log(e, 'eeeee');
                                     return (
                                         <tr
                                             key={e.item.id}
@@ -55,8 +54,9 @@ const CartTable = (props) => {
                         name: '',
                         unit: ''
                     }}
+                    innerRef={ref}
                     onSubmit={(values) => {
-                        console.log('values', values);
+                        // console.log('values', values);
                         const itemObj = {
                             id: null,
                             item: {
@@ -79,6 +79,8 @@ const CartTable = (props) => {
                         }
                         items.push(itemObj);
                         setItems([...items]);
+                        console.log('formik', ref)
+                        ref.current?.resetForm();
                     }}
                 >
                     {({ submitForm, setFieldValue }) => (

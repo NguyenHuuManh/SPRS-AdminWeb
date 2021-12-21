@@ -55,7 +55,7 @@ const EventManagerment = () => {
             message: 'Bạn có chắc chắn xóa sự kiện ' + item?.name,
             buttons: [
                 {
-                    label: 'Yes',
+                    label: 'Đồng ý',
                     onClick: () => {
                         apiDeleteEvent({ id: item?.id }).then((e) => {
                             if (e?.status == 200) {
@@ -81,7 +81,7 @@ const EventManagerment = () => {
                     }
                 },
                 {
-                    label: 'No',
+                    label: 'Hủy',
                     onClick: () => { }
                 }
             ]
@@ -111,7 +111,7 @@ const EventManagerment = () => {
             <CCardHeader>
                 <CRow>
                     <CCol md={6}>
-                        Danh sách tài khoản
+                        Danh sách sự kiện
                     </CCol>
                 </CRow>
             </CCardHeader>
@@ -153,7 +153,7 @@ const EventManagerment = () => {
                         </>
                     )}
                 </Formik>
-                <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                <div className="table-wrapper-scroll-y my-custom-scrollbar">
                     <table className="table table-hover">
                         <thead className="table-active">
                             <th>STT</th>
@@ -197,7 +197,7 @@ const EventManagerment = () => {
                                             </td>
                                             <td>
                                                 <CButton
-                                                    color="primary"
+                                                    color="danger"
                                                     onClick={() => { deleteEvent(item) }}
                                                     style={{ minWidth: 100 }}
                                                 >Xóa

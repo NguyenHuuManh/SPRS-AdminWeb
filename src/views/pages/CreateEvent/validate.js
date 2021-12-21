@@ -1,5 +1,6 @@
 import { isEmpty } from "lodash";
 import moment from "moment";
+import { removeAscent } from "src/helps/function";
 import * as Yup from "yup";
 
 function compareTime(str1, str2) {
@@ -102,5 +103,20 @@ export const createEventValidation = Yup.object().shape({
             const { open_time, close_time } = parent;
             return moment(open_time, 'DD-MM-YYYY HH:mm').isBefore(moment(close_time, 'DD-MM-YYYY HH:mm'))
         }),
+
+    name: Yup.string().required("Họ và tên không được bỏ trống").nullable()
+        .test("test", "Tên sự kiện không có kí tự đặc biệt,có ít nhất 4 ký tự", function () {
+            const { parent } = this;
+            const { name } = parent;
+            const nameStrim = removeAscent(name);
+            if (nameStrim?.length < 4) return false;
+            if (nameStrim?.replace(' ', '').length < 4) return false
+            let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
+            let regex1 = /^[a-zA-Z0-9]+(?:\s[a-zA-Z0-9]+)+$/
+            let regex2 = /^[a-zA-Z0-9]+$/
+            let regex3 = /^[a-zA-Z]+$/
+            return regex.test(nameStrim?.trim()) || regex1.test(nameStrim?.trim()) || regex2.test(nameStrim?.trim()) || regex3.test(nameStrim?.trim());
+        }),
+    adressString: Yup.string().required("Địa chỉ sự kiện không được bỏ trống").nullable(),
 });
 

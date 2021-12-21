@@ -38,7 +38,7 @@ const CreateNotificaton = () => {
                         open_time: "",
                         close_time: "",
                         status: "",
-                        name: "SPRS",
+                        name: "",
                         description: "",
                         address: "",
                         adressString: ''
@@ -88,7 +88,6 @@ const CreateNotificaton = () => {
                                 GPS_long: addressPoint?.GPS_long
                             },
                         }
-                        console.log('body', body);
                         createEvent(body);
                     }}
                 >

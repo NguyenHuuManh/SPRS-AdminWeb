@@ -54,7 +54,7 @@ const EventUpdate = (props) => {
                         description: 'Cập nhật ảnh thành công',
                     });
                     setPageSize({ ...pageSize });
-                    setIsOpen(false)
+                    // setIsOpen(false)
                     return;
                 }
                 setLoading(false);
@@ -160,7 +160,7 @@ const EventUpdate = (props) => {
                                     GPS_long: address?.GPS_long
                                 },
                             }
-                            console.log('body', body);
+                            // console.log('body', body);
                             delete body.adressString
                             callUpdate(body);
                         }}
