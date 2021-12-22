@@ -19,6 +19,7 @@ import CountDown from "src/views/components/AppCountdown";
 import AppLoading from "src/views/components/AppLoading";
 import { appToast } from "src/views/components/AppToastContainer";
 import InputField from "src/views/components/InputField";
+import InputMaskField from "src/views/components/InputMaskField";
 import { checkPhone } from "./validate";
 
 const ForgotPassword = () => {
@@ -85,17 +86,17 @@ const ForgotPassword = () => {
                                                 to: "",
                                             }}
                                             onSubmit={(values) => {
-                                                getOtp({ to: "+84" + values.to })
+                                                getOtp({ to: "+84" + values.to.substring(1) })
                                             }}
                                         >
                                             {({ submitForm }) => (
                                                 <>
                                                     <Field
-                                                        component={InputField}
+                                                        component={InputMaskField}
                                                         name="to"
                                                         iconName="cil-phone"
                                                         title="Số điện thoại: "
-                                                        isPhone
+                                                    // isPhone
                                                     />
 
                                                     <div className="d-flex justify-content-start align-items-center" >
