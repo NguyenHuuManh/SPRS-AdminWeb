@@ -1,4 +1,4 @@
-import { GET_GROUP_AUTHORIED, GET_GROUP_UNAUTHORIED, GET_PERMISSION, GET_PERMISSION_OWN, GET_UNPERMISSION, GET_USERS, GET_USERS_BY_NAME, GRANT_GROUP_PERMISSION, GRANT_GROUP_UNPERMISSION, GRANT_USER_UNPERMISSION, GRANT__USER_PERMISSION, GROUPS, GROUP_REGISTER } from "src/constrants/action";
+import { GET_GROUP_AUTHORIED, GET_GROUP_UNAUTHORIED, GET_PERMISSION, GET_PERMISSION_OWN, GET_UNPERMISSION, GET_USERS, GET_USERS_BY_NAME, GRANT_GROUP_PERMISSION, GRANT_GROUP_UNPERMISSION, GRANT_USER_UNPERMISSION, GRANT__USER_PERMISSION, GROUPS, GROUPS_NOTIFICATION, GROUP_REGISTER } from "src/constrants/action";
 import { convertToQuery } from "src/helps/function";
 import httpServices from "src/services/httpServices";
 
@@ -29,6 +29,10 @@ export const apiGetUersByName = async (body) => {
 
 export const apiGetGroups = async () => {
   return await httpServices.get(`${GROUPS}`);
+};
+
+export const apiGetGroupsNotification = async () => {
+  return await httpServices.get(`${GROUPS_NOTIFICATION}`);
 };
 
 export const apiGetGroupsRegister = async () => {

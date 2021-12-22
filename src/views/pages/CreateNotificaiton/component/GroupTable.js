@@ -1,6 +1,6 @@
-import { CCard, CCardBody, CCardHeader, CCol, CRow } from "@coreui/react";
+import { CCard, CCardBody } from "@coreui/react";
 import React, { useEffect, useState } from "react";
-import { apiGetGroups } from "src/apiFunctions/permission";
+import { apiGetGroupsNotification } from "src/apiFunctions/permission";
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
 const GroupTable = (props) => {
     const { items, setItems } = props
@@ -8,7 +8,7 @@ const GroupTable = (props) => {
     const [data, setData] = useState([])
 
     const callGetGroup = () => {
-        apiGetGroups().then((res) => {
+        apiGetGroupsNotification().then((res) => {
             if (res?.status == 200) {
                 if (res.data.code == "200") {
                     setData(res?.data?.lstObj);

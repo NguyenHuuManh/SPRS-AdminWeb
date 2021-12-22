@@ -44,6 +44,7 @@ export const CITY = `${URL}/sprs/api/address/city`
 export const DISTRICT = `${URL}/sprs/api/address/district/`
 export const SUBDISTRICT = `${URL}/sprs/api/address/subdistrict/`
 export const GROUPS = `${URL}/sprs/api/groups-all`
+export const GROUPS_NOTIFICATION = `${URL}/sprs/api/groups-notification`
 export const GROUP_REGISTER = `${URL}/sprs/api/groups-register-web`
 export const GET_PERMISSION_OWN = `${URL}/sprs/api/permissions/getOwn`
 export const ITEMS = `${URL}/sprs/api/item`
