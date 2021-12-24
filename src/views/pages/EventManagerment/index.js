@@ -37,7 +37,6 @@ const EventManagerment = () => {
             if (e?.status == 200) {
                 if (e.data.code === '200') {
                     setData(e.data.obj);
-                    console.log(e.data, 'dataaa')
                 }
             } else {
                 appToast({

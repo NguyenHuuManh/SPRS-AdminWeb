@@ -56,7 +56,7 @@ const EventUpdate = (props) => {
                         description: 'Cập nhật ảnh thành công',
                     });
                     setPageSize({ ...pageSize });
-                    // setIsOpen(false)
+                    setIsOpen(false);
                     return;
                 }
                 setLoading(false);
