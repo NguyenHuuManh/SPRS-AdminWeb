@@ -36,9 +36,9 @@ export const updateProfile = Yup.object().shape({
             const currentDate = moment().format('DD-MM-YYYY');
             return moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
         }),
-    city: Yup.number().required("không được bỏ trống").nullable(),
-    district: Yup.number().required("không được bỏ trống").nullable(),
-    subDistrict: Yup.number().required("không được bỏ trống").nullable(),
+    city: Yup.number().required("Không được bỏ trống").nullable(),
+    district: Yup.number().required("Không được bỏ trống").nullable(),
+    subDistrict: Yup.number().required("Không được bỏ trống").nullable(),
 });
 
 export const updateORG = Yup.object().shape({
@@ -60,5 +60,5 @@ export const updateORG = Yup.object().shape({
             // console.log('regex3', regex3.test(nameStrim?.trim()));
             return regex.test(nameStrim?.trim()) || regex1.test(nameStrim?.trim()) || regex2.test(nameStrim?.trim()) || regex3.test(nameStrim?.trim());
         }),
-    adressString: Yup.string().required("không được bỏ trống").nullable(),
+    adressString: Yup.string().required("Không được bỏ trống").nullable(),
 });

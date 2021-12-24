@@ -35,7 +35,7 @@ const Login = () => {
               <CCard className="p-4">
                 <CCardBody>
                   <h1>Đăng nhập</h1>
-                  <p className="text-muted">đăng nhập với tài khoản của quản lý hệ thống hoặc tổ chức</p>
+                  <p className="text-muted">Đăng nhập với tài khoản của quản lý hệ thống hoặc tổ chức</p>
                   <Formik
                     initialValues={{
                       username: "",

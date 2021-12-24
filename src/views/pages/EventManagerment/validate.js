@@ -3,9 +3,9 @@ import * as Yup from "yup";
 
 
 export const addCart = Yup.object().shape({
-    id: Yup.string().required("chọn loại mặt hàng").nullable(),
+    id: Yup.string().required("Chọn loại mặt hàng").nullable(),
     quantity: Yup.number().required("nhập số lượng").nullable()
-        .test("test", "số lượng phải lớn hơn 0", function () {
+        .test("test", "Số lượng phải lớn hơn 0", function () {
             const { parent } = this;
             const { quantity } = parent;
             return quantity > 0;

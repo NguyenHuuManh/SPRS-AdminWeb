@@ -24,7 +24,7 @@ const OrgManagerment = () => {
                         <CNavItem
                             style={{ cursor: "pointer", padding: 10, border: "solid", borderWidth: 0, borderBottomWidth: tabActive === "AccountList" ? 1 : 0, borderColor: "coral" }}
                             onClick={() => { setTabActive("AccountList") }}>
-                            Danh sách tài khoản
+                            Danh sách được phê duyệt
                         </CNavItem>
                     </CNav>
                     {/* </CCardHeader> */}

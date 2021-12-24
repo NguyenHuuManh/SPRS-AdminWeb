@@ -12,7 +12,6 @@ const Dashboard = () => {
                     <div style={{ backgroundColor: "#FFFF", height: "100%" }}>
                         <CityChart />
                     </div>
-
                 </CCol>
                 <CCol lg={6} style={{ paddingBottom: 25 }}>
                     <div style={{ backgroundColor: "#FFFF", height: "100%" }}>

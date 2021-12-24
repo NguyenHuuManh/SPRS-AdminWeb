@@ -85,6 +85,6 @@ export const register = Yup.object().shape({
         const { rePassWord, password } = parent;
         return rePassWord == password
     }),
-    groupsId: Yup.string().required("chọn loại tài khoản").nullable(),
+    groupsId: Yup.string().required("Chọn loại tài khoản").nullable(),
 
 });

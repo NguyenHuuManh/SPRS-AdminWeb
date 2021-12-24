@@ -40,6 +40,8 @@ const FormSearch = () => {
         }
 
     }
+
+    console.log(data, 'data');
     return (
         <Card>
             <Formik

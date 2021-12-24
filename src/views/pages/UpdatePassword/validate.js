@@ -2,7 +2,7 @@ import * as Yup from "yup";
 
 export const updatePass = Yup.object().shape({
     oldPassword: Yup.string().required("Mật khẩu không được để trống"),
-    newPassword: Yup.string().required("không được bỏ trống").nullable()
+    newPassword: Yup.string().required("Không được bỏ trống").nullable()
         .test('checkSpace', "Mật khẩu không chứa khoảng trắng", function () {
             const { parent } = this;
             const { newPassword } = parent;
