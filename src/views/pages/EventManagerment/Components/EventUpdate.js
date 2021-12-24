@@ -21,6 +21,7 @@ const EventUpdate = (props) => {
 
     useEffect(() => {
         if (isOpen && data?.address) {
+            console.log(data.reliefInformations, 'itemsss');
             setAddress({
                 GPS_lati: data.address?.GPS_lati || "",
                 GPS_long: data.address?.GPS_long || "",
@@ -28,10 +29,11 @@ const EventUpdate = (props) => {
                 district: data.address?.district.name || "",
                 subDistrict: data.address?.subDistrict.name || "",
             });
-            setItems(data.reliefInformations);
+            setItems([...data.reliefInformations]);
             setDataInfor({ ...data });
         }
     }, [isOpen, data]);
+
 
     const updateImg = () => {
         if (isEmpty(image)) {
@@ -201,7 +203,6 @@ const EventUpdate = (props) => {
                                                             name="close_time"
                                                             title="thời gian đóng cửa"
                                                         />
-
                                                     </div>
                                                 </div>
                                             </CCol>

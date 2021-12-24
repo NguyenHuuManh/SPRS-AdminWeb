@@ -50,6 +50,8 @@ const CreateNotificaton = () => {
                         subdistrict_id: ""
                     }}
                     validationSchema={createNotificaton}
+                    validateOnChange={false}
+                    validateOnBlur={false}
                     onSubmit={(values) => {
                         const objTrimmed = trimmedObject(values)
                         if (isEmpty(items)) {
