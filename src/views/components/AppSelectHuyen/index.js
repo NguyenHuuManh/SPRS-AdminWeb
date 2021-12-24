@@ -2,7 +2,7 @@
  * /api/danh-muc-dan-toc
  * danh mục đơn vị
  */
-import { isEmpty, isNull, isUndefined } from "lodash-es";
+import { isEmpty, isNull } from "lodash-es";
 import React, { memo, useEffect, useState } from "react";
 import { apiDistrict } from "src/apiFunctions/mapPlace";
 import AppSelect from "../AppSelect";

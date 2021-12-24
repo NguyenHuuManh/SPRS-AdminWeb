@@ -91,7 +91,7 @@ export const addEvent = Yup.object().shape({
 
 export const createEventValidation = Yup.object().shape({
     open_time: Yup.string().required("Nhập thời gian bắt đầu").nullable()
-        .test("test", "Thời gian đóng cửa phải sau thời gian hiện tại", function () {
+        .test("test", "Thời gian mở cửa phải sau thời gian hiện tại", function () {
             const { parent } = this;
             const { open_time } = parent;
             const currentDate = moment().format('DD-MM-YYYY HH:mm');

@@ -81,6 +81,7 @@ export const GET_TOP_USER_ORG = `${URL}/sprs/api/report-manage/getReportTopUserO
 
 //Notification
 export const SEND_NOTIFICATION = `${URL}/sprs/api/notification-manage/send-notifications`
+export const GET_NOTIFICATIONs = `${URL}/sprs/api/notification-manage/admin/get`
 //Ban
 export const BAN_ACC = `${URL}/sprs/api/user/ban`
 export const UNBAN_ACC = `${URL}/sprs/api/user/unbanned`

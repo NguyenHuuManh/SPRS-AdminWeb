@@ -34,8 +34,8 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <h1>Login</h1>
-                  <p className="text-muted">Sign In to your account</p>
+                  <h1>Đăng nhập</h1>
+                  <p className="text-muted">đăng nhập với tài khoản của quản lý hệ thống hoặc tổ chức</p>
                   <Formik
                     initialValues={{
                       username: "",
@@ -69,14 +69,14 @@ const Login = () => {
                               }}
                               type="submit"
                             >
-                              Login
+                              Đăng nhập
                             </CButton>
                           </CCol>
                           <CCol xs="6" className="text-right">
 
                             <Link to="/forgot">
                               <CButton color="link" className="px-0">
-                                Forgot password?
+                                Quên mật khẩu?
                               </CButton>
                             </Link>
                           </CCol>
@@ -91,7 +91,7 @@ const Login = () => {
               >
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
+                    <h2>Đăng ký</h2>
                     <p>
                       Quản lý tổ chức dễ dàng hơn với SPRS site
                     </p>
@@ -102,7 +102,7 @@ const Login = () => {
                         active
                         tabIndex={-1}
                       >
-                        Register Now!
+                        Đăng ký ngay!
                       </CButton>
                     </Link>
                   </div>

@@ -19,6 +19,7 @@ const UserTab = () => {
     const [tinh, setTinh] = useState(profile.data.profile?.address?.city);
     const [huyen, setHuyen] = useState(profile.data.profile?.address?.district);
     const [editAble, setEditAble] = useState(false);
+    const groupsId = profile.data?.profile?.groups_user?.map((e) => { return e.id });
     const distpatch = useDispatch();
     const upateProfile = (values) => {
         apiUpdate(values).then((res) => {
@@ -95,19 +96,26 @@ const UserTab = () => {
                         <CCard>
                             <CCardHeader className="d-flex">
                                 <span style={{ paddingRight: 10, cursor: "pointer" }}> Thông tin tài khoản</span>
-                                <CIcon name="cil-pen" />
-                                <span onClick={() => {
-                                    if (editAble) {
-                                        resetForm();
-                                        setEditAble(false);
-                                        setTinh(profile.data.profile?.address?.city);
-                                        setHuyen(profile.data.profile?.address?.district);
-                                    } else {
-                                        setEditAble(true);
-                                    }
-                                }} style={{ paddingRight: 10, paddingLeft: 10, cursor: "pointer" }}>
-                                    {editAble ? "Hủy" : "Chỉnh sửa"}
-                                </span>
+                                {
+                                    groupsId?.includes(4) && (
+                                        <>
+                                            <CIcon name="cil-pen" />
+                                            <span onClick={() => {
+                                                if (editAble) {
+                                                    resetForm();
+                                                    setEditAble(false);
+                                                    setTinh(profile.data.profile?.address?.city);
+                                                    setHuyen(profile.data.profile?.address?.district);
+                                                } else {
+                                                    setEditAble(true);
+                                                }
+                                            }} style={{ paddingRight: 10, paddingLeft: 10, cursor: "pointer" }}>
+                                                {editAble ? "Hủy" : "Chỉnh sửa"}
+                                            </span>
+                                        </>
+                                    )
+                                }
+
                             </CCardHeader>
                             <CCardBody>
                                 <Form>

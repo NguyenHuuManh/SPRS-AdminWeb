@@ -86,7 +86,7 @@ const RegisterMember = () => {
                     validateOnChange={false}
                     validationSchema={register}
                     onSubmit={(values) => {
-                      const objTrimmed = trimmedObject(values)
+                      const objTrimmed = trimmedObject({ ...values })
                       let user = {
                         username: objTrimmed.username,
                         phone: objTrimmed.phone,
@@ -119,9 +119,9 @@ const RegisterMember = () => {
                       getOtp(values);
                     }}
                   >
-                    {({ submitForm, errors }) => (
+                    {({ submitForm, errors, values }) => (
                       <>
-                        {/* {console.log("error", errors)} */}
+                        {console.log("value", values)}
                         <Field
                           horizontal
                           component={InputField}

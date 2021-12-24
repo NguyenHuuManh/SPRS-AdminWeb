@@ -34,9 +34,9 @@ const Ranking = (props) => {
                 datasets={[{
                     label: "Top 5",
                     backgroundColor: 'blue',
-                    data: data.dataChart.concat([0]),
+                    data: data.dataChart,
                 }]}
-                labels={data?.lableChart.concat([''])}
+                labels={data?.lableChart}
                 options={{
                     tooltips: {
                         enabled: true

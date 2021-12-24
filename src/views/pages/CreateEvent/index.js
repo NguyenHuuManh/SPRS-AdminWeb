@@ -33,131 +33,133 @@ const CreateNotificaton = () => {
         <CCard>
             <CardHeader>Tạo điểm cứu trợ</CardHeader>
             <CCardBody>
-                <Formik
-                    initialValues={{
-                        open_time: "",
-                        close_time: "",
-                        status: "",
-                        name: "",
-                        description: "",
-                        address: "",
-                        adressString: ''
-                    }}
-                    validationSchema={createEventValidation}
-                    validateOnChange={false}
-                    onSubmit={(values) => {
-                        const objTrimmed = trimmedObject(values);
-                        console.log('objTrimmed', objTrimmed)
-                        if (isEmpty(items)) {
-                            appToast({
-                                toastOptions: { type: "error" },
-                                description: "Chọn ít nhất một mặt hàng",
-                            });
-                            return;
-                        }
-                        const body = {
-                            ...values,
-                            reliefInformations: items.map((e) => {
-                                return {
-                                    id: e.id,
-                                    quantity: e.quantity,
-                                    item: {
-                                        id: e.item.id
-                                    }
+                <CRow>
+                    <CCol lg={6}>
+                        <GroupTable items={items} setItems={setItems} />
+                    </CCol>
+                    <CCol lg={6}>
+                        <Formik
+                            initialValues={{
+                                open_time: "",
+                                close_time: "",
+                                status: "",
+                                name: "",
+                                description: "",
+                                address: "",
+                                adressString: ''
+                            }}
+                            validationSchema={createEventValidation}
+                            validateOnChange={false}
+                            onSubmit={(values) => {
+                                const objTrimmed = trimmedObject(values);
+                                console.log('objTrimmed', objTrimmed)
+                                if (isEmpty(items)) {
+                                    appToast({
+                                        toastOptions: { type: "error" },
+                                        description: "Chọn ít nhất một mặt hàng",
+                                    });
+                                    return;
                                 }
-                            }),
-                            address: {
-                                city: {
-                                    code: "",
-                                    id: "",
-                                    name: addressPoint.city
-                                },
-                                district: {
-                                    code: "",
-                                    id: "",
-                                    name: addressPoint?.district,
-                                },
-                                subDistrict: {
-                                    code: "",
-                                    id: "",
-                                    name: addressPoint?.subDistrict,
-                                },
-                                addressLine: "",
-                                addressLine2: "",
-                                GPS_lati: addressPoint?.GPS_lati,
-                                GPS_long: addressPoint?.GPS_long
-                            },
-                        }
-                        createEvent(body);
-                    }}
-                >
-                    {({ values }) => (
-                        <Form>
-                            <CRow>
-                                <CCol lg={6}>
-                                    <GroupTable items={items} setItems={setItems} />
-                                </CCol>
-
-                                <CCol lg={6}>
+                                const body = {
+                                    ...values,
+                                    reliefInformations: items.map((e) => {
+                                        return {
+                                            id: e.id,
+                                            quantity: e.quantity,
+                                            item: {
+                                                id: e.item.id
+                                            }
+                                        }
+                                    }),
+                                    address: {
+                                        city: {
+                                            code: "",
+                                            id: "",
+                                            name: addressPoint.city
+                                        },
+                                        district: {
+                                            code: "",
+                                            id: "",
+                                            name: addressPoint?.district,
+                                        },
+                                        subDistrict: {
+                                            code: "",
+                                            id: "",
+                                            name: addressPoint?.subDistrict,
+                                        },
+                                        addressLine: "",
+                                        addressLine2: "",
+                                        GPS_lati: addressPoint?.GPS_lati,
+                                        GPS_long: addressPoint?.GPS_long
+                                    },
+                                }
+                                createEvent(body);
+                            }}
+                        >
+                            {({ values }) => (
+                                <Form>
                                     <CRow>
                                         <CCol lg={12}>
-                                            <Field
-                                                maxTitle={170}
-                                                component={InputField}
-                                                name="name"
-                                                title="Tên Điểm cứu trợ"
-                                            />
-                                        </CCol>
+                                            <CRow>
+                                                <CCol lg={12}>
+                                                    <Field
+                                                        maxTitle={170}
+                                                        component={InputField}
+                                                        name="name"
+                                                        title="Tên Điểm cứu trợ"
+                                                    />
+                                                </CCol>
 
-                                        <CCol md={6}>
-                                            <Field
-                                                component={AppTimePicker}
-                                                name="open_time"
-                                                title="thời gian mở cửa"
-                                            />
+                                                <CCol md={6}>
+                                                    <Field
+                                                        component={AppTimePicker}
+                                                        name="open_time"
+                                                        title="thời gian mở cửa"
+                                                    />
+                                                </CCol>
+                                                <CCol md={6}>
+                                                    <Field
+                                                        component={AppTimePicker}
+                                                        name="close_time"
+                                                        title="thời gian đóng cửa"
+                                                    />
+                                                </CCol>
+                                                <CCol lg={12}>
+                                                    <Field
+                                                        maxTitle={170}
+                                                        component={Mappicker}
+                                                        name="adressString"
+                                                        title="Địa chỉ"
+                                                        adress={addressPoint}
+                                                        setAdress={setAddressPoint}
+                                                        iconName={"cil-map"}
+                                                    />
+                                                </CCol>
+                                                <CCol lg={12}>
+                                                    <div style={{ height: 110 }}>
+                                                        <Field
+                                                            title="Nội dung"
+                                                            component={TextAreaField}
+                                                            name="description"
+                                                            type="TextArea"
+                                                        />
+                                                    </div>
+                                                </CCol>
+                                            </CRow>
                                         </CCol>
-                                        <CCol md={6}>
-                                            <Field
-                                                component={AppTimePicker}
-                                                name="close_time"
-                                                title="thời gian đóng cửa"
-                                            />
-                                        </CCol>
-                                        <CCol lg={12}>
-                                            <Field
-                                                maxTitle={170}
-                                                component={Mappicker}
-                                                name="adressString"
-                                                title="Địa chỉ"
-                                                adress={addressPoint}
-                                                setAdress={setAddressPoint}
-                                                iconName={"cil-map"}
-                                            />
-                                        </CCol>
-                                        <CCol lg={12}>
-                                            <div style={{ height: 110 }}>
-                                                <Field
-                                                    title="Nội dung"
-                                                    component={TextAreaField}
-                                                    name="description"
-                                                    type="TextArea"
-                                                />
+                                    </CRow>
+                                    <CRow>
+                                        <CCol md={12}>
+                                            <div className="d-flex justify-content-end align-items-end" style={{ width: "100%", paddingTop: 50 }}>
+                                                <CButton type="submit" color="primary" >Thêm mới</CButton>
                                             </div>
                                         </CCol>
-
                                     </CRow>
-                                </CCol>
-                            </CRow>
-                            <CRow>
-                                <CCol md={12}>
-                                    <div className="d-flex justify-content-end align-items-end" style={{ width: "100%" }}>
-                                        <CButton type="submit" color="primary" >Thêm mới</CButton>
-                                    </div>
-                                </CCol>
-                            </CRow>
-                        </Form>
-                    )}
-                </Formik>
+                                </Form>
+                            )}
+                        </Formik>
+                    </CCol>
+                </CRow>
             </CCardBody>
         </CCard>
     )

@@ -66,7 +66,7 @@ const Register = () => {
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
               <CCardHeader>
-                <h1>Register</h1>
+                <h1>Đăng ký</h1>
               </CCardHeader>
               <CCardBody className="p-4">
                 <CForm>

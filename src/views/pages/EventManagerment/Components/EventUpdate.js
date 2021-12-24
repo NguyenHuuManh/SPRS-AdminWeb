@@ -17,6 +17,7 @@ const EventUpdate = (props) => {
     const [items, setItems] = useState([]);
     const [address, setAddress] = useState({});
     const [image, setImage] = useState({});
+    const [dataInfor, setDataInfor] = useState({});
 
     useEffect(() => {
         if (isOpen && data?.address) {
@@ -28,6 +29,7 @@ const EventUpdate = (props) => {
                 subDistrict: data.address?.subDistrict.name || "",
             });
             setItems(data.reliefInformations);
+            setDataInfor({ ...data });
         }
     }, [isOpen, data]);
 
@@ -111,10 +113,10 @@ const EventUpdate = (props) => {
                     <Formik
                         validationSchema={updateEventValidation}
                         initialValues={{
-                            open_time: data.open_time,
-                            close_time: data.close_time,
-                            name: data.name,
-                            description: data.description,
+                            open_time: dataInfor.open_time,
+                            close_time: dataInfor.close_time,
+                            name: dataInfor.name,
+                            description: dataInfor.description,
                         }}
                         enableReinitialize
                         onSubmit={(values) => {
@@ -127,7 +129,7 @@ const EventUpdate = (props) => {
                             }
                             const body = {
                                 ...values,
-                                id: data.id,
+                                id: dataInfor.id,
                                 reliefInformations: items.map((e) => {
                                     return {
                                         id: e.id,
@@ -138,7 +140,7 @@ const EventUpdate = (props) => {
                                     }
                                 }),
                                 address: {
-                                    id: data.address.id,
+                                    id: dataInfor.address.id,
                                     city: {
                                         code: "",
                                         id: "",
@@ -180,7 +182,7 @@ const EventUpdate = (props) => {
                                             <CCol lg={12}>
                                                 <div style={{ width: '100%', display: 'flex' }}>
                                                     <div style={{ width: '50%', height: 235 }}>
-                                                        <ImagePicker image={image} setImage={setImage} imageUrl={`${IMAGE_URL}${data?.images?.img_url}`} />
+                                                        <ImagePicker image={image} setImage={setImage} imageUrl={`${IMAGE_URL}${dataInfor?.images?.img_url}`} />
                                                     </div>
                                                     <div style={{ width: '50%', paddingLeft: 20 }}>
                                                         <Field
@@ -205,7 +207,7 @@ const EventUpdate = (props) => {
                                             </CCol>
                                             <CCol lg={12}>
                                                 {
-                                                    data?.address && (
+                                                    dataInfor?.address && (
                                                         <Field
                                                             maxTitle={170}
                                                             component={Mappicker}

@@ -31,7 +31,7 @@ const TheHeaderDropdown = () => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownItem header tag="div" color="light" className="text-center">
-          <strong>Account</strong>
+          <strong>Tài khoản</strong>
         </CDropdownItem>
         <CDropdownItem
           onClick={() => {
@@ -39,7 +39,7 @@ const TheHeaderDropdown = () => {
           }}
         >
           <CIcon name="cil-user" className="mfe-2" />
-          Profile
+          Thông tin tài khoản
         </CDropdownItem>
         {
           groupsId?.includes(4) && (
@@ -60,7 +60,7 @@ const TheHeaderDropdown = () => {
           }}
         >
           <CIcon name="cil-lock-locked" className="mfe-2" />
-          Logout
+          Đăng xuất
         </CDropdownItem>
       </CDropdownMenu>
     </CDropdown>

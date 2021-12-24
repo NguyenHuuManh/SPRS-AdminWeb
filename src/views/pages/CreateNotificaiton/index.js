@@ -12,6 +12,8 @@ import InputField from "src/views/components/InputField";
 import GroupTable from "./component/GroupTable";
 import { trimmedObject } from "src/helps/function";
 import AppLoading from "src/views/components/AppLoading";
+import { isEmpty } from 'lodash'
+import { createNotificaton } from "./validate";
 const CreateNotificaton = () => {
     const [tinh, setTinh] = useState({});
     const [huyen, setHuyen] = useState({});
@@ -47,8 +49,16 @@ const CreateNotificaton = () => {
                         district_id: "",
                         subdistrict_id: ""
                     }}
+                    validationSchema={createNotificaton}
                     onSubmit={(values) => {
                         const objTrimmed = trimmedObject(values)
+                        if (isEmpty(items)) {
+                            appToast({
+                                toastOptions: { type: "error" },
+                                description: "Chọn ít nhất một nhóm người dùng",
+                            });
+                            return;
+                        }
                         const body = {
                             ...objTrimmed,
                             groupUsers: items.map((e) => e.id)
@@ -97,6 +107,7 @@ const CreateNotificaton = () => {
                                                 title="Tiêu đề"
                                                 name="title"
                                                 idHuyen={huyen?.id}
+                                                maxLength={250}
                                             />
                                         </CCol>
                                     </CRow>

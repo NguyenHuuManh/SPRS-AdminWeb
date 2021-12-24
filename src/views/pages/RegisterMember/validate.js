@@ -42,7 +42,7 @@ export const register = Yup.object().shape({
             return regex.test(nameStrim?.trim());
         }),
     dob: Yup.string().required("Ngày sinh không được bỏ trống").nullable()
-        .test("test", "Thời gian đóng cửa phải sau thời gian hiện tại", function () {
+        .test("test", "Ngày sinh phải trước hoặc bằng Ngày hiện tại", function () {
             const { parent } = this;
             const { dob } = parent;
             console.log('dob', dob)
