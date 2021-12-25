@@ -5,7 +5,8 @@ import { FaEye } from 'react-icons/fa';
 import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
 import { appToast } from 'src/views/components/AppToastContainer';
-const RequestManage = () => {
+const RequestManage = (props) => {
+    const { tabActive } = props
     const [items, setItems] = useState([]);
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState([]);
@@ -22,8 +23,9 @@ const RequestManage = () => {
     const debounceSearch = useCallback(debounce((nextValue) => callGetReques(nextValue), 500), []);
 
     useEffect(() => {
+        if (tabActive !== 'RequestManage') return;
         callGetReques("");
-    }, [])
+    }, [tabActive])
 
     useEffect(() => {
         setItems([]);
