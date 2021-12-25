@@ -37,23 +37,8 @@ export default memo((props: Props) => {
         functionProps,
         ...remainProps
     } = props;
-    const [data, setData] = useState([{ id: 1, name: 'Đang hoạt động' }, { id: 0, name: 'Không hoạt động' }]);
+    const [data, setData] = useState([{ id: 1, name: "Đang hoạt động" }, { id: 0, name: "Đã kết thúc" }, { id: 3, name: "Ngừng hoạt động" }, { id: 2, name: "Sắp diễn ra" }]);
     const [loading, setLoading] = useState(false);
-
-    // const callGetGroup = () => {
-    //     apiGetGroups().then((res) => {
-    //         if (res?.status == 200) {
-    //             if (res.data.code == "200") {
-    //                 setData(res?.data?.lstObj);
-    //             }
-    //             return;
-    //         }
-    //     })
-    // }
-
-    // useEffect(() => {
-    //     callGetGroup();
-    // }, []);
 
     const selectedOption =
         field && data?.find((option) => option?.id + '' == field?.value + '');

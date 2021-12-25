@@ -178,10 +178,10 @@ const EventManagerment = () => {
                                         name='status'
                                         title="Trạng thái"
                                         functionProps={(item) => {
-                                            if (item?.id == 0 || item?.id == 1) {
+                                            if (item?.id == 0 || item?.id == 1 || item?.id == 2 || item?.id == 3) {
                                                 setStatus(item?.id);
                                             } else {
-                                                setStatus(2);
+                                                setStatus(4);
                                             }
                                             setPageSize({ ...pageSize, page: 1, size: size })
                                         }}
@@ -231,7 +231,7 @@ const EventManagerment = () => {
                                                 {
                                                     item?.status == 0 ? 'Đã kết thúc'
                                                         : item?.status == 1 ? 'Đang hoạt động' :
-                                                            item?.status == 2 ? 'Chưa diễn ra' :
+                                                            item?.status == 2 ? 'Sắp diễn ra' :
                                                                 item?.status == 3 ? 'Ngừng hoạt động' : ''}
                                             </td>
                                             <td>

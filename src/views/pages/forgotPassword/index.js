@@ -94,7 +94,7 @@ const ForgotPassword = () => {
                                                 to: "",
                                             }}
                                             onSubmit={(values) => {
-                                                getOtp({ to: "+84" + values.to.substring(1) })
+                                                getOtp({ to: "+84" + values.to.substring(1), platform: 1 })
                                             }}
                                         >
                                             {({ submitForm }) => (

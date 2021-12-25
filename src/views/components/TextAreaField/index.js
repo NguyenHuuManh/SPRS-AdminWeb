@@ -47,6 +47,7 @@ export default memo((props) => {
               placeholder={placeholder}
               onChange={onChange}
               value={value}
+              disabled={disabled}
             />
             {errors[name] && <div className="err-text" >{errors[name]}</div>}
           </div>

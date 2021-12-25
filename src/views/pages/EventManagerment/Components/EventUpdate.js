@@ -18,7 +18,7 @@ const EventUpdate = (props) => {
     const { isOpen, setIsOpen, data, setPageSize, pageSize, setLoading } = props;
     const [items, setItems] = useState([]);
     const [address, setAddress] = useState({});
-    const [image, setImage] = useState({});
+    const [image, setImage] = useState(false);
     const [dataInfor, setDataInfor] = useState({});
 
     useEffect(() => {
@@ -56,34 +56,40 @@ const EventUpdate = (props) => {
             setLoading(true);
             if (response.status == 200) {
                 if (response.data.code == '200') {
-                    appToast({
-                        toastOptions: { type: "success" },
-                        description: 'Cập nhật ảnh thành công',
-                    });
-                    setPageSize({ ...pageSize });
-                    setIsOpen(false);
+                    // appToast({
+                    //     toastOptions: { type: "success" },
+                    //     description: 'Cập nhật ảnh thành công',
+                    // });
+                    // setPageSize({ ...pageSize });
+                    // setIsOpen(false);
                     return;
                 }
-                setLoading(false);
+
                 appToast({
                     toastOptions: { type: "error" },
                     description: response?.data?.message,
                 });
                 return;
             }
-            setLoading(false);
             appToast({
                 toastOptions: { type: "error" },
                 description: 'Chức năng đang bảo trì',
             });
-        }).finally(() => { setImage({}) })
+        }).finally(() => {
+            setImage(false);
+            setLoading(false);
+        })
     }
     const callUpdate = (body) => {
+
         confirmAlert({
             title: 'Cập nhật sự kiện',
             message: 'Nếu thời gian của sự kiện được thay đổi, có thể mất vài giây để trạng thái của sự kiện được cập nhật, vui lòng reload lại trang để thấy được sư thay đổi',
             buttons: []
         });
+        if (image) {
+            updateImg();
+        }
         apiUpdateEvent(body).then((e) => {
             if (e.status == 200) {
                 if (e.data.code == '200') {
@@ -247,7 +253,7 @@ const EventUpdate = (props) => {
                                     <CCol md={12}>
                                         <div className="d-flex justify-content-end align-items-end" style={{ width: "100%" }}>
                                             <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false) }}>Hủy</CButton>
-                                            <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { updateImg() }}>Cập nhật ảnh</CButton>
+                                            {/* <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { updateImg() }}>Cập nhật ảnh</CButton> */}
                                             <CButton type="submit" color="primary" >Cập nhật thông tin</CButton>
                                         </div>
                                     </CCol>
