@@ -9,10 +9,8 @@ import InputField from "src/views/components/InputField";
 const OtpVerify = (props) => {
     const history = useHistory();
     const { isOpen, setIsOpen, body, getOtp, timeStart, disableOTP, setDisableOTP } = props;
-    console.log('disableOTP', disableOTP);
     const singup = (values) => {
         apiSigupUserORG(values).then((res) => {
-            console.log("resSignup", res);
             if (res.status == 200 && res.data.code == "200") {
                 appToast({
                     toastOptions: { type: "success" },
@@ -30,7 +28,6 @@ const OtpVerify = (props) => {
 
     const otpVerify = (values) => {
         apiPhoneVerify(values).then((e) => {
-            console.log(e, 'Verifi');
             if (e?.status == 200) {
                 if (e?.data?.code == '200') {
                     singup(body);
@@ -64,7 +61,6 @@ const OtpVerify = (props) => {
                     }}
                     enableReinitialize
                     onSubmit={(values) => {
-                        console.log(values, 'valuessss')
                         otpVerify(values);
                     }}
                 >

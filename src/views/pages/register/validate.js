@@ -68,11 +68,6 @@ export const register = Yup.object().shape({
             let regex1 = /^[a-zA-Z0-9]+(?:\s[a-zA-Z0-9]+)+$/
             let regex2 = /^[a-zA-Z0-9]+$/
             let regex3 = /^[a-zA-Z]+$/
-            // console.log(nameStrim, 'nameStrim')
-            // console.log('regex', regex.test(nameStrim?.trim()));
-            // console.log('regex1', regex1.test(nameStrim?.trim()));
-            // console.log('regex2', regex2.test(nameStrim?.trim()));
-            // console.log('regex3', regex3.test(nameStrim?.trim()));
             return regex.test(nameStrim?.trim()) || regex1.test(nameStrim?.trim()) || regex2.test(nameStrim?.trim()) || regex3.test(nameStrim?.trim());
         }),
     city: Yup.string().required("Tỉnh/Thành phố không được bỏ trống").nullable(),

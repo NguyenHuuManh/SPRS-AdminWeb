@@ -1,4 +1,4 @@
-import { ASSIGN, CREATE_EVENT, DELETE_EVENT, GET_ASSIGN, GET_EVENTS, GET_UN_ASSIGN, ITEMS, UN_ASSIGN, UPDATE_EVENT, UPLOAD_IMG_RELIEF } from "src/constrants/action";
+import { ASSIGN, CREATE_EVENT, DELETE_EVENT, GET_ASSIGN, GET_EVENTS, GET_UN_ASSIGN, ITEMS, UN_ASSIGN, UPDATE_EVENT, UPDATE_STATUS_RELIEF_POINT, UPLOAD_IMG_RELIEF } from "src/constrants/action";
 import { convertToQuery } from "src/helps/function";
 import httpServices from "src/services/httpServices";
 
@@ -46,6 +46,9 @@ export const apiUploadImg = async (body) => {
     return await httpServices.post(`${UPLOAD_IMG_RELIEF}`, body);
 };
 
+export const apiUpdateStatusReliefPoint = async (params) => {
+    return await httpServices.put(`${UPDATE_STATUS_RELIEF_POINT}${convertToQuery(params)}`);
+};
 
 
 

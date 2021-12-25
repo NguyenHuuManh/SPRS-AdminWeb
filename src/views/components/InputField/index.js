@@ -5,11 +5,10 @@ import {
   CInputGroupPrepend,
   CInputGroupText
 } from "@coreui/react";
-import React, { memo, useMemo, useState } from "react";
-import { FaEye, FaRegEye, FaEyeSlash } from 'react-icons/fa';
+import React, { memo, useState } from "react";
 
 export default memo((props) => {
-  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, leftView, ...remainProps } = props;
+  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, leftView, disabled, ...remainProps } = props;
   const { name, value } = field;
   const { errors, touched, setFieldValue } = form;
   const onChange = (values) => {
@@ -53,12 +52,13 @@ export default memo((props) => {
           )}
           <div style={{ width: `${(iconName && isPhone) ? "60%" : (iconName || isPhone || leftView ? "80%" : "100%")}` }}>
             <CInput
-              style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0 }}
+              style={{ borderTopLeftRadius: 0, borderBottomLeftRadius: 0, backgroundColor: disabled ? 'rgba(250, 250, 250,1)' : '#FFFF' }}
               {...remainProps}
               type={type}
               placeholder={placeholder}
               onChange={onChange}
               value={value}
+              disabled={disabled}
             />
             {errors[name] && <div className="err-text" >{errors[name]}</div>}
           </div>

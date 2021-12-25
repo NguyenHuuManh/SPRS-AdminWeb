@@ -45,7 +45,6 @@ export const register = Yup.object().shape({
         .test("test", "Ngày sinh phải trước hoặc bằng Ngày hiện tại", function () {
             const { parent } = this;
             const { dob } = parent;
-            console.log('dob', dob)
             const currentDate = moment().format('DD-MM-YYYY');
             return moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
         }),

@@ -22,7 +22,6 @@ const UserManager = () => {
             search: keySearch,
         }
         apiGetMembers(body).then((e) => {
-            console.log(e, "eEEE");
             if (e?.status == 200) {
                 if (e.data.code == '200') {
                     setData(e.data.obj);

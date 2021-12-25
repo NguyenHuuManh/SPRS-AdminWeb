@@ -2,6 +2,8 @@ import { CButton, CCard, CCardBody, CCardHeader, CCol, CModal, CRow } from '@cor
 import { Field, Form, Formik } from 'formik';
 import { isEmpty } from 'lodash';
 import React, { useEffect, useState } from 'react'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { apiUpdateEvent, apiUploadImg } from 'src/apiFunctions/Event';
 import { IMAGE_URL } from 'src/constrants/action';
 import AppTimePicker from 'src/views/components/AppTimePicker';
@@ -21,7 +23,7 @@ const EventUpdate = (props) => {
 
     useEffect(() => {
         if (isOpen && data?.address) {
-            console.log(data.reliefInformations, 'itemsss');
+            // console.log(data.address, 'data.address');
             setAddress({
                 GPS_lati: data.address?.GPS_lati || "",
                 GPS_long: data.address?.GPS_long || "",
@@ -31,9 +33,10 @@ const EventUpdate = (props) => {
             });
             setItems([...data.reliefInformations]);
             setDataInfor({ ...data });
+            setImage('');
         }
     }, [isOpen, data]);
-
+    // console.log(address, 'addressssss');
 
     const updateImg = () => {
         if (isEmpty(image)) {
@@ -76,6 +79,11 @@ const EventUpdate = (props) => {
         }).finally(() => { setImage({}) })
     }
     const callUpdate = (body) => {
+        confirmAlert({
+            title: 'Cập nhật sự kiện',
+            message: 'Nếu thời gian của sự kiện được thay đổi, có thể mất vài giây để trạng thái của sự kiện được cập nhật, vui lòng reload lại trang để thấy được sư thay đổi',
+            buttons: []
+        });
         apiUpdateEvent(body).then((e) => {
             if (e.status == 200) {
                 if (e.data.code == '200') {
@@ -121,6 +129,8 @@ const EventUpdate = (props) => {
                             description: dataInfor.description,
                         }}
                         enableReinitialize
+                        validateOnChange={false}
+                        validateOnBlur={false}
                         onSubmit={(values) => {
                             if (isEmpty(items)) {
                                 appToast({
@@ -164,7 +174,6 @@ const EventUpdate = (props) => {
                                     GPS_long: address?.GPS_long
                                 },
                             }
-                            // console.log('body', body);
                             delete body.adressString
                             callUpdate(body);
                         }}
@@ -208,7 +217,7 @@ const EventUpdate = (props) => {
                                             </CCol>
                                             <CCol lg={12}>
                                                 {
-                                                    dataInfor?.address && (
+                                                    data?.address && (
                                                         <Field
                                                             maxTitle={170}
                                                             component={Mappicker}

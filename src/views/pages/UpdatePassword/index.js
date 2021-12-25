@@ -15,7 +15,7 @@ import { updatePass } from './validate'
 const UpdatePassword = () => {
     const OnchangePass = (values) => {
         apiUpdatePass(values).then((e) => {
-            console.log("e update P", e);
+            // console.log("e update P", e);
             if (e?.status == 200) {
                 if (e.data.code == "200") {
                     appToast({

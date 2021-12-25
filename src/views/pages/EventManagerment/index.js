@@ -4,7 +4,7 @@ import { debounce } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { confirmAlert } from 'react-confirm-alert'; // Import
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
-import { apiDeleteEvent, getEvents } from "src/apiFunctions/Event";
+import { apiDeleteEvent, apiUpdateStatusReliefPoint, getEvents } from "src/apiFunctions/Event";
 import { calcItemStart } from "src/helps/function";
 import AppSelectStautusEvent from "src/views/components/AppSelectStautusEvent";
 import { appToast } from "src/views/components/AppToastContainer";
@@ -32,11 +32,13 @@ const EventManagerment = () => {
             sort: sort,
             status_store: status
         }
-        setLoading(true)
+        setLoading(true);
         getEvents(param).then((e) => {
             if (e?.status == 200) {
                 if (e.data.code === '200') {
                     setData(e.data.obj);
+                    const clone = e.data.obj?.reliefs?.filter((e) => e.id == itemSelected?.id)?.[0];
+                    setItemSelected({ ...clone });
                 }
             } else {
                 appToast({
@@ -94,6 +96,43 @@ const EventManagerment = () => {
     useEffect(() => {
         searchByName(key);
     }, [pageSize]);
+
+    const ChangeStatusPoint = (item) => {
+        confirmAlert({
+            title: `${item.status == 1 ? "Bật điểm sự kiện" : "Tắt điểm sự kiện"}`,
+            message: `${item.status == 1 ? "Hệ thống sẽ tự động cập nhật lại ngày giờ mở cửa của điểm cứu trợ là ngày giờ hiện tại " : "Hệ thống sẽ tự động cập nhật lại ngày giờ đóng cửa của điểm cứu trợ là ngày giờ hiện tại"}`,
+            buttons: [
+                {
+                    label: 'Đồng ý',
+                    onClick: () => {
+                        apiUpdateStatusReliefPoint({ id: item.id, status: item.status }).then((response) => {
+                            if (response.status == 200) {
+                                if (response.data.code == "200") {
+                                    setPageSize({ ...pageSize })
+                                    return
+                                }
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: response.data.message,
+                                });
+                                return
+                            }
+                            appToast({
+                                toastOptions: { type: "error" },
+                                description: "Chức năng đang bảo trì",
+                            });
+
+                        })
+                    }
+                },
+                {
+                    label: 'Hủy',
+                    onClick: () => { }
+                }
+            ]
+        });
+
+    }
 
     const pageChange = (newPage) => {
         setPageSize({ ...pageSize, page: newPage });
@@ -161,6 +200,8 @@ const EventManagerment = () => {
                             <th>Ngày mở cửa</th>
                             <th>Ngày đóng cửa</th>
                             <th>Địa chỉ</th>
+                            <th>Trạng thái</th>
+                            <th></th>
                             <th></th>
                             <th></th>
                             <th></th>
@@ -180,12 +221,52 @@ const EventManagerment = () => {
                                             <td>{item?.open_time}</td>
                                             <td>{item?.close_time}</td>
                                             <td>{item?.address?.subDistrict.name + ' ' + item?.address?.district.name + ' ' + item?.address?.city.name}</td>
+                                            <td
+                                                style={{
+                                                    color: item?.status == 0 ? 'orange'
+                                                        : item?.status == 1 ? '#32a864' :
+                                                            item?.status == 2 ? 'gray' :
+                                                                item?.status == 3 ? 'red' : ''
+                                                }}>
+                                                {
+                                                    item?.status == 0 ? 'Đã kết thúc'
+                                                        : item?.status == 1 ? 'Đang hoạt động' :
+                                                            item?.status == 2 ? 'Chưa diễn ra' :
+                                                                item?.status == 3 ? 'Ngừng hoạt động' : ''}
+                                            </td>
                                             <td>
                                                 <CButton
                                                     color="info"
                                                     onClick={() => { setDetail(true) }}
                                                     style={{ minWidth: 100 }}
                                                 >Xem chi tiết</CButton>
+                                            </td>
+                                            <td>
+                                                <CButton
+                                                    color={item?.status == 1 ? "warning" : "secondary"}
+                                                    onClick={() => {
+                                                        if (item.status + '' == '0') {
+                                                            confirmAlert({
+                                                                title: 'Bật điểm cứu trợ',
+                                                                message: 'Thời gian kết thúc của điểm đã vượt quá ngày hiện tại, cập nhật lại thời gian nếu bạn muốn bật lại điểm',
+                                                                buttons: []
+                                                            });
+                                                            return;
+                                                        }
+                                                        if (item.status + '' == '2') {
+                                                            confirmAlert({
+                                                                title: 'Bật điểm cứu trợ',
+                                                                message: 'Thời gian bắt đầu của điểm chưa đến ngày hiện tại, cập nhật lại thời gian nếu bạn muốn bật điểm',
+                                                                buttons: []
+                                                            });
+                                                            return;
+                                                        }
+                                                        ChangeStatusPoint({ ...item, status: item.status + '' == '3' ? 1 : 3 });
+                                                    }}
+                                                    style={{ minWidth: 100 }}
+                                                >
+                                                    {item?.status == 1 ? 'Tắt điểm' : 'Bật điểm'}
+                                                </CButton>
                                             </td>
                                             <td>
                                                 <CButton

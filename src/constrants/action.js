@@ -97,4 +97,5 @@ export const UN_ASSIGN = `${URL}/sprs/api/reliefPoint-manage/unassign`
 export const GET_ASSIGN = `${URL}/sprs/api/reliefPoint-manage/get-assign`
 export const GET_UN_ASSIGN = `${URL}/sprs/api/reliefPoint-manage/get-unassign`
 export const UPLOAD_IMG_RELIEF = `${URL}/sprs/api/reliefPoint-manage/uploadImg`
+export const UPDATE_STATUS_RELIEF_POINT = `${URL}/sprs/api/reliefPoint-manage/update-status`
 

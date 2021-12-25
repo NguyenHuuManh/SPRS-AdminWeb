@@ -37,7 +37,6 @@ const Users = ({ history }) => {
   };
 
   useEffect(() => {
-    console.log(pageSize, "pageSize");
     callAPI();
   }, [pageSize]);
 

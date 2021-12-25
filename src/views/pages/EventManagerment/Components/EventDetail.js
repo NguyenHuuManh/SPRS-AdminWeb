@@ -10,7 +10,6 @@ import TextAreaField from 'src/views/components/TextAreaField';
 const EventDetail = (props) => {
     const { isOpen, setIsOpen, data } = props;
     const [address, setAddress] = useState({});
-    console.log('prosp', props);
     useEffect(() => {
         if (isOpen && data?.address) {
             setAddress({
@@ -22,7 +21,7 @@ const EventDetail = (props) => {
             });
         }
     }, [isOpen, data]);
-    console.log(address, 'address')
+    // console.log(address, 'address')
     return (
         <CModal
             show={isOpen}

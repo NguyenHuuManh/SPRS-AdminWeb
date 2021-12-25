@@ -18,14 +18,18 @@ export default memo((props) => {
     const ref = useRef();
     useEffect(() => {
         if (!isOpen) return;
+        if (adress && !isEmpty(adress)) {
+            setMarker({ ...marker, lat: Number(adress.GPS_lati), lng: Number(adress?.GPS_long) })
+            return;
+        }
         navigator.geolocation.getCurrentPosition((e) => {
             setMarker({ ...marker, lat: e?.coords?.latitude, lng: e?.coords?.longitude })
         })
     }, [isOpen])
 
     useEffect(() => {
-        setFieldValue(name, isEmpty(adress) ? `` : `${adress?.city}-${adress?.district}-${adress?.subDistrict}`)
-    }, [adress])
+        setFieldValue(name, isEmpty(adress) ? `` : `${adress?.city}-${adress?.district}-${adress?.subDistrict}`);
+    }, [adress]);
 
     const getDetailPlace = () => {
         apiPlaceDetailByLongLat(marker?.lng, marker?.lat)
@@ -76,11 +80,10 @@ export default memo((props) => {
                 return res.json();
             })
             .then((e) => {
-                console.log("e", e)
+                // console.log("e", e)
                 if (e?.status == "OK") {
                     setMarker({ ...marker, lat: e?.result?.geometry.location.lat, lng: e?.result?.geometry.location.lng });
                     ref.current.panTo({ lat: e?.result?.geometry.location.lat, lng: e?.result?.geometry.location.lng });
-                    console.log(ref.current, 'ref.current');
                 } else {
                     appToast({
                         toastOptions: { type: "error" },
@@ -116,7 +119,7 @@ export default memo((props) => {
                                 if (disabled) return;
                                 setIsOpen(!isOpen)
                             }}
-                            value={value}
+                            value={isEmpty(adress) ? `` : `${adress?.city}-${adress?.district}-${adress?.subDistrict}`}
                         />
                         {errors[name] && <div className="err-text" >{errors[name]}</div>}
                     </div>
@@ -156,7 +159,6 @@ export default memo((props) => {
                                         name="placeID"
                                         defaultKey={adress?.subDistrict}
                                         functionProps={(e) => {
-                                            console.log("e", e);
                                             submitForm()
                                         }}
                                         mapRef={ref}

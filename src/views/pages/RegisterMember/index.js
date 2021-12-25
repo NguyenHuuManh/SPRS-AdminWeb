@@ -37,7 +37,6 @@ const RegisterMember = () => {
     }
     setLoading(true);
     apiGetOtpSignup(bodyOTP).then((e) => {
-      console.log("GET_OTP", e);
       if (e?.status == 200) {
         if (e.data.code == "200") {
           setOtpModal(true);
@@ -121,7 +120,6 @@ const RegisterMember = () => {
                   >
                     {({ submitForm, errors, values }) => (
                       <>
-                        {console.log("value", values)}
                         <Field
                           horizontal
                           component={InputField}

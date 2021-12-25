@@ -42,7 +42,7 @@ const CreateNotificaton = () => {
                             initialValues={{
                                 open_time: "",
                                 close_time: "",
-                                status: "",
+                                // status: "",
                                 name: "",
                                 description: "",
                                 address: "",

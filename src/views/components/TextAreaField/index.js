@@ -1,16 +1,14 @@
 import CIcon from "@coreui/icons-react";
 import {
-  CInput,
   CInputGroup,
   CInputGroupPrepend,
   CInputGroupText,
   CTextarea
 } from "@coreui/react";
-import React, { memo, useMemo, useState } from "react";
-import { FaEye, FaRegEye, FaEyeSlash } from 'react-icons/fa';
+import React, { memo, useState } from "react";
 
 export default memo((props) => {
-  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, iconRight, ...remainProps } = props;
+  const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, iconRight, disabled, ...remainProps } = props;
   const { name, value } = field;
   const { errors, touched, setFieldValue } = form;
   const onChange = (values) => {
@@ -43,7 +41,7 @@ export default memo((props) => {
           }
           <div style={{ width: `${iconName ? "60%" : (iconName || type == "password" ? "80%" : "100%")}`, height: "100%" }}>
             <CTextarea
-              style={{ borderRadius: 5, height: "100%" }}
+              style={{ borderRadius: 5, height: "100%", backgroundColor: disabled ? 'rgba(250, 250, 250,1)' : '#FFFF' }}
               {...remainProps}
               type={type}
               placeholder={placeholder}
