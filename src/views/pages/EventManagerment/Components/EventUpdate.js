@@ -126,141 +126,149 @@ const EventUpdate = (props) => {
             <CCard>
                 <CCardHeader>Cập nhật điểm cứu trợ</CCardHeader>
                 <CCardBody>
-                    <Formik
-                        validationSchema={updateEventValidation}
-                        initialValues={{
-                            open_time: dataInfor.open_time,
-                            close_time: dataInfor.close_time,
-                            name: dataInfor.name,
-                            description: dataInfor.description,
-                        }}
-                        enableReinitialize
-                        validateOnChange={false}
-                        validateOnBlur={false}
-                        onSubmit={(values) => {
-                            if (isEmpty(items)) {
-                                appToast({
-                                    toastOptions: { type: "error" },
-                                    description: "Chọn ít nhất một mặt hàng",
-                                });
-                                return;
-                            }
-                            const body = {
-                                ...values,
-                                id: dataInfor.id,
-                                reliefInformations: items.map((e) => {
-                                    return {
-                                        id: e.id,
-                                        quantity: e.quantity,
-                                        item: {
-                                            id: e.item.id
-                                        }
-                                    }
-                                }),
-                                address: {
-                                    id: dataInfor.address.id,
-                                    city: {
-                                        code: "",
-                                        id: "",
-                                        name: address.city
-                                    },
-                                    district: {
-                                        code: "",
-                                        id: "",
-                                        name: address?.district,
-                                    },
-                                    subDistrict: {
-                                        code: "",
-                                        id: "",
-                                        name: address?.subDistrict,
-                                    },
-                                    addressLine: "",
-                                    addressLine2: "",
-                                    GPS_lati: address?.GPS_lati,
-                                    GPS_long: address?.GPS_long
-                                },
-                            }
-                            delete body.adressString
-                            callUpdate(body);
-                        }}
-                    >
-                        {({ values }) => (
-                            <Form>
-                                <CRow>
-                                    <CCol lg={6}>
-                                        <CRow>
-                                            <CCol lg={12}>
-                                                <CartTable items={items} setItems={setItems} />
-                                            </CCol>
-                                        </CRow>
-                                    </CCol>
-                                    <CCol lg={6}>
-                                        <CRow>
-                                            <CCol lg={12}>
-                                                <div style={{ width: '100%', display: 'flex' }}>
-                                                    <div style={{ width: '50%', height: 235 }}>
-                                                        <ImagePicker image={image} setImage={setImage} imageUrl={`${IMAGE_URL}${dataInfor?.images?.img_url}`} />
-                                                    </div>
-                                                    <div style={{ width: '50%', paddingLeft: 20 }}>
-                                                        <Field
-                                                            maxTitle={170}
-                                                            component={InputField}
-                                                            name="name"
-                                                            title="Tên Điểm cứu trợ"
-                                                        />
-                                                        <Field
-                                                            component={AppTimePicker}
-                                                            name="open_time"
-                                                            title="thời gian mở cửa"
-                                                        />
-                                                        <Field
-                                                            component={AppTimePicker}
-                                                            name="close_time"
-                                                            title="thời gian đóng cửa"
-                                                        />
-                                                    </div>
-                                                </div>
-                                            </CCol>
-                                            <CCol lg={12}>
-                                                {
-                                                    data?.address && (
-                                                        <Field
-                                                            maxTitle={170}
-                                                            component={Mappicker}
-                                                            name="adressString"
-                                                            title="Địa chỉ"
-                                                            adress={address}
-                                                            setAdress={setAddress}
-                                                            iconName={"cil-map"}
-                                                        />
-                                                    )
-                                                }
-                                            </CCol>
-                                            <CCol lg={12}>
-                                                <div style={{ height: 110 }}>
-                                                    <Field
-                                                        title="Mô tả"
-                                                        component={TextAreaField}
-                                                        name="description"
-                                                        type="TextArea"
-                                                    />
-                                                </div>
-                                            </CCol>
-                                        </CRow>
-                                    </CCol>
-                                </CRow>
-                                <CRow>
-                                    <CCol md={12}>
-                                        <div className="d-flex justify-content-end align-items-end" style={{ width: "100%" }}>
-                                            <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false) }}>Hủy</CButton>
-                                            {/* <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { updateImg() }}>Cập nhật ảnh</CButton> */}
-                                            <CButton type="submit" color="primary" >Cập nhật thông tin</CButton>
-                                        </div>
-                                    </CCol>
-                                </CRow>
-                            </Form>
-                        )}
-                    </Formik>
+                    <CRow>
+                        <CCol lg={6}>
+                            <CRow>
+                                <CCol lg={12}>
+                                    <CartTable items={items} setItems={setItems} />
+                                </CCol>
+                            </CRow>
+                        </CCol>
+                        <CCol lg={6}>
+                            <CRow>
+                                <CCol lg={12}>
+                                    <Formik
+                                        validationSchema={updateEventValidation}
+                                        initialValues={{
+                                            open_time: dataInfor.open_time,
+                                            close_time: dataInfor.close_time,
+                                            name: dataInfor.name,
+                                            description: dataInfor.description,
+                                        }}
+                                        enableReinitialize
+                                        validateOnChange={false}
+                                        validateOnBlur={false}
+                                        onSubmit={(values) => {
+                                            if (isEmpty(items)) {
+                                                appToast({
+                                                    toastOptions: { type: "error" },
+                                                    description: "Chọn ít nhất một mặt hàng",
+                                                });
+                                                return;
+                                            }
+                                            const body = {
+                                                ...values,
+                                                id: dataInfor.id,
+                                                reliefInformations: items.map((e) => {
+                                                    return {
+                                                        id: e.id,
+                                                        quantity: e.quantity,
+                                                        item: {
+                                                            id: e.item.id
+                                                        }
+                                                    }
+                                                }),
+                                                address: {
+                                                    id: dataInfor.address.id,
+                                                    city: {
+                                                        code: "",
+                                                        id: "",
+                                                        name: address.city
+                                                    },
+                                                    district: {
+                                                        code: "",
+                                                        id: "",
+                                                        name: address?.district,
+                                                    },
+                                                    subDistrict: {
+                                                        code: "",
+                                                        id: "",
+                                                        name: address?.subDistrict,
+                                                    },
+                                                    addressLine: "",
+                                                    addressLine2: "",
+                                                    GPS_lati: address?.GPS_lati,
+                                                    GPS_long: address?.GPS_long
+                                                },
+                                            }
+                                            delete body.adressString
+                                            callUpdate(body);
+                                        }}
+                                    >
+                                        {({ values }) => (
+                                            <Form>
+                                                <CRow>
+                                                    <CCol lg={12}>
+                                                        <CRow>
+                                                            <CCol lg={12}>
+                                                                <div style={{ width: '100%', display: 'flex' }}>
+                                                                    <div style={{ width: '50%', height: 235 }}>
+                                                                        <ImagePicker image={image} setImage={setImage} imageUrl={`${IMAGE_URL}${dataInfor?.images?.img_url}`} />
+                                                                    </div>
+                                                                    <div style={{ width: '50%', paddingLeft: 20 }}>
+                                                                        <Field
+                                                                            maxTitle={170}
+                                                                            component={InputField}
+                                                                            name="name"
+                                                                            title="Tên Điểm cứu trợ"
+                                                                        />
+                                                                        <Field
+                                                                            component={AppTimePicker}
+                                                                            name="open_time"
+                                                                            title="thời gian mở cửa"
+                                                                        />
+                                                                        <Field
+                                                                            component={AppTimePicker}
+                                                                            name="close_time"
+                                                                            title="thời gian đóng cửa"
+                                                                        />
+                                                                    </div>
+                                                                </div>
+                                                            </CCol>
+                                                            <CCol lg={12}>
+                                                                {
+                                                                    data?.address && (
+                                                                        <Field
+                                                                            maxTitle={170}
+                                                                            component={Mappicker}
+                                                                            name="adressString"
+                                                                            title="Địa chỉ"
+                                                                            adress={address}
+                                                                            setAdress={setAddress}
+                                                                            iconName={"cil-map"}
+                                                                        />
+                                                                    )
+                                                                }
+                                                            </CCol>
+                                                            <CCol lg={12}>
+                                                                <div style={{ height: 110 }}>
+                                                                    <Field
+                                                                        title="Mô tả"
+                                                                        component={TextAreaField}
+                                                                        name="description"
+                                                                        type="TextArea"
+                                                                    />
+                                                                </div>
+                                                            </CCol>
+                                                        </CRow>
+                                                    </CCol>
+                                                </CRow>
+                                                <CRow>
+                                                    <CCol md={12}>
+                                                        <div className="d-flex justify-content-end align-items-end" style={{ width: "100%", paddingTop: 40 }}>
+                                                            <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false) }}>Hủy</CButton>
+                                                            {/* <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { updateImg() }}>Cập nhật ảnh</CButton> */}
+                                                            <CButton type="submit" color="primary" >Cập nhật thông tin</CButton>
+                                                        </div>
+                                                    </CCol>
+                                                </CRow>
+                                            </Form>
+                                        )}
+                                    </Formik>
+                                </CCol>
+                            </CRow>
+                        </CCol>
+                    </CRow>
                 </CCardBody>
             </CCard>
         </CModal >

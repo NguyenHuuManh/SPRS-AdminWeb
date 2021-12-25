@@ -5,6 +5,7 @@ import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
 import { Card } from "reactstrap";
 import { apiAssign, apiGetAssigned, apiGetUnAssigned, apiUnAssign } from 'src/apiFunctions/Event';
+import { appToast } from 'src/views/components/AppToastContainer';
 import UserTable from './UserTable';
 const Group = () => {
     const [itemSelected, setItemSelected] = useState({});
@@ -69,6 +70,14 @@ const Group = () => {
                             if (e?.status === 200) {
                                 if (e?.data?.code === '200') {
                                     getAssign();
+                                    return;
+                                }
+                                if (e?.data?.code === '403') {
+                                    appToast({
+                                        toastOptions: { type: "error" },
+                                        description: e?.data?.message,
+                                    });
+                                    return;
                                 }
                             }
                         })

@@ -48,6 +48,8 @@ const CartTable = (props) => {
             <CCardBody>
                 <Formik
                     validationSchema={addCart}
+                    validateOnBlur={false}
+                    validateOnChange={false}
                     initialValues={{
                         quantity: "",
                         id: "",

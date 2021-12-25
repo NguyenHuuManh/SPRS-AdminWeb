@@ -49,7 +49,7 @@ const UpdatePassword = () => {
                                 <CForm>
                                     <Formik
                                         initialValues={{
-                                            oldPassword: "password",
+                                            oldPassword: "",
                                             newPassword: "",
                                             reNewPassword: "",
                                         }}

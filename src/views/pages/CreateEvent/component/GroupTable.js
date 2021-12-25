@@ -49,6 +49,8 @@ const GroupTable = (props) => {
             <CCardBody>
                 <Formik
                     validationSchema={addCard}
+                    validateOnChange={false}
+                    validateOnBlur={false}
                     initialValues={{
                         quantity: "",
                         id: "",
