@@ -3,6 +3,7 @@ import { Field, Formik } from "formik";
 import { debounce } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { apiGetAccountAccepted } from 'src/apiFunctions/authencation';
+import { calcItemStart } from "src/helps/function";
 import AppSelectAccountTypes from "src/views/components/AppSelectAccountTypes";
 const size = 10;
 const AccountList = (props) => {
@@ -96,7 +97,7 @@ const AccountList = (props) => {
                     )}
                 </Formik>
                 <table className="table table-hover">
-                    <thead>
+                    <thead className="table-active">
                         <th>STT</th>
                         <th>Tên đầy đủ</th>
                         <th>Tên tài khoản</th>
@@ -114,7 +115,7 @@ const AccountList = (props) => {
                                         onClick={() => { setItemSelected(item) }}
                                     // style={{ backgroundColor: '#dce1e9' }}
                                     >
-                                        <td>{index + 1}</td>
+                                        <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
                                         <td>{item?.user?.full_name}</td>
                                         <td>{item?.user?.username}</td>
                                         <td>{item?.user?.phone}</td>

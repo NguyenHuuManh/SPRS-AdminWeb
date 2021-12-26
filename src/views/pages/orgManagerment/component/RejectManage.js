@@ -5,6 +5,7 @@ import { apiGetRequestRejectedAdminORG } from 'src/apiFunctions/authencation';
 import { debounce } from "lodash-es";
 import { Field, Formik } from "formik";
 import AppSelectAccountTypes from "src/views/components/AppSelectAccountTypes";
+import { calcItemStart } from "src/helps/function";
 const size = 10;
 const RejectManage = (props) => {
     const { tabActive } = props
@@ -111,7 +112,7 @@ const RejectManage = (props) => {
                                         className={`${item.id == itemSelected?.id && "table-active"}`}
                                         onClick={() => { setItemSelected(item) }}
                                     >
-                                        <td>{index + 1}</td>
+                                        <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
                                         <td>{item?.user?.full_name}</td>
                                         <td>{item?.user?.username}</td>
                                         <td>{item?.user?.phone}</td>

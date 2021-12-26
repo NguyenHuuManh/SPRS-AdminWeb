@@ -4,6 +4,7 @@ import { debounce, isEmpty } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
+import { calcItemStart } from "src/helps/function";
 import AppSelectAccountTypes from "src/views/components/AppSelectAccountTypes";
 import { appToast } from 'src/views/components/AppToastContainer';
 const size = 10;
@@ -81,10 +82,10 @@ const RequestManage = (props) => {
 
     const handleCheckAll = () => {
         // checkDcThaoTac();
-        if (isAllItemOnPageChecked(items, data, "id")) {
-            setItems(removeCheckAllItems(items, data, "id"));
+        if (isAllItemOnPageChecked(items, data?.object, "id")) {
+            setItems(removeCheckAllItems(items, data?.object, "id"));
         } else {
-            setItems(addAllItemOfPage(items, data, "id"));
+            setItems(addAllItemOfPage(items, data?.object, "id"));
         }
     };
 
@@ -179,8 +180,7 @@ const RequestManage = (props) => {
                                         className={`${item.id == itemSelected?.id && "table-active"}`}
                                         onClick={() => { setItemSelected(item) }}
                                     >
-                                        <td>{index + 1}</td>
-
+                                        <td>{calcItemStart(pageSize.page, pageSize.size) + index}</td>
                                         <td>{item?.user?.full_name}</td>
                                         <td>{item?.user?.username}</td>
                                         <td>{item?.user?.phone}</td>
