@@ -162,7 +162,14 @@ const Group = () => {
                                                     <td>{item?.username}</td>
                                                     <td>{item?.full_name}</td>
                                                     <td>{item?.phone}</td>
-                                                    <td><CButton onClick={() => { callAssign({ source_id: item.id, target_id: itemSelected.id }) }}>Thêm</CButton></td>
+                                                    <td>
+                                                        <CButton color='primary'
+                                                            onClick={() => { callAssign({ source_id: item.id, target_id: itemSelected.id }) }}
+                                                            disabled={item.isAvailable == 0}
+                                                        >
+                                                            Thêm
+                                                        </CButton>
+                                                    </td>
                                                 </tr>
                                             )
                                         })
@@ -208,7 +215,12 @@ const Group = () => {
                                                     <td>{item?.username}</td>
                                                     <td>{item?.full_name}</td>
                                                     <td>{item?.phone}</td>
-                                                    <td><CButton onClick={() => { callUnAssign({ source_id: item.id, target_id: itemSelected.id }) }}>Xóa</CButton></td>
+                                                    <td>
+                                                        <CButton
+                                                            color='danger'
+                                                            onClick={() => { callUnAssign({ source_id: item.id, target_id: itemSelected.id }) }}>
+                                                            Xóa
+                                                        </CButton></td>
                                                 </tr>
                                             )
                                         })

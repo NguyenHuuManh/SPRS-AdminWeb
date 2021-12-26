@@ -2,6 +2,7 @@ import CIcon from "@coreui/icons-react";
 import { CButton, CCard, CCardBody, CCardHeader, CCol, CRow } from '@coreui/react';
 import { Field, Form, Formik } from "formik";
 import React, { useEffect, useState } from "react";
+import { FaEdit, FaTimesCircle } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { apiGetORG, apiUpdateORG } from "src/apiFunctions/authencation";
 import { trimmedObject } from "src/helps/function";
@@ -45,10 +46,10 @@ const UserTab = () => {
 
     const getORG = () => {
         apiGetORG().then((res) => {
-            if (res.status === 200) {
-                if (res.data.code === "200") {
-                    setOrg(res.data.obj);
-                    console.log("res", res.data.obj.address)
+            if (res?.status === 200) {
+                if (res?.data?.code === "200") {
+                    setOrg(res?.data?.obj);
+                    // console.log("res", res?.data?.obj.address)
                     setOrgAdress({
                         GPS_lati: res.data.obj.address?.GPS_lati || "",
                         GPS_long: res.data.obj.address?.GPS_long || "",
@@ -103,6 +104,7 @@ const UserTab = () => {
                     onSubmit={(values) => {
                         const objTrimmed = trimmedObject(values)
                         const body = {
+                            id: objTrimmed.id,
                             name: objTrimmed.name || "",
                             founded: objTrimmed.founded || "",
                             description: objTrimmed.description || "",
@@ -145,8 +147,9 @@ const UserTab = () => {
                                     } else {
                                         setEditAble(true);
                                     }
-                                }} style={{ paddingRight: 10, paddingLeft: 10, cursor: "pointer" }}>
+                                }} style={{ paddingRight: 10, paddingLeft: 10, cursor: "pointer", color: 'Highlight', justifyContent: 'center' }}>
                                     {editAble ? "Hủy" : "Chỉnh sửa"}
+                                    {editAble ? <FaTimesCircle size={20} style={{ marginLeft: 10 }} /> : <FaEdit size={20} style={{ marginLeft: 10 }} />}
                                 </span>
                             </CCardHeader>
                             <CCardBody>

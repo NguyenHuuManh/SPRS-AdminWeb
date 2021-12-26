@@ -31,7 +31,7 @@ const OrgManagerment = () => {
                     <CCardBody>
                         <CTabContent>
                             <CTabPane active={tabActive === "RequestManage"}>
-                                <RequestManage />
+                                <RequestManage tabActive={tabActive} />
                             </CTabPane>
                             <CTabPane active={tabActive === "RejectManage"}>
                                 <RejectManage tabActive={tabActive} />

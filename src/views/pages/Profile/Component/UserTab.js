@@ -14,6 +14,7 @@ import { getProfileRequest } from "src/redux/modules/profile";
 import { apiUpdate } from "src/apiFunctions/authencation";
 import { trimmedObject } from "src/helps/function";
 import AppTimePicker from "src/views/components/AppTimePicker";
+import { FaEdit, FaTimesCircle } from "react-icons/fa";
 const UserTab = () => {
     const profile = useSelector((state) => state.profileReducer);
     const [tinh, setTinh] = useState(profile.data.profile?.address?.city);
@@ -109,8 +110,9 @@ const UserTab = () => {
                                                 } else {
                                                     setEditAble(true);
                                                 }
-                                            }} style={{ paddingRight: 10, paddingLeft: 10, cursor: "pointer" }}>
+                                            }} style={{ paddingRight: 10, paddingLeft: 10, cursor: "pointer", justifyContent: 'center', color: 'Highlight' }}>
                                                 {editAble ? "Hủy" : "Chỉnh sửa"}
+                                                {editAble ? <FaTimesCircle size={20} style={{ marginLeft: 10 }} /> : <FaEdit size={20} style={{ marginLeft: 10 }} />}
                                             </span>
                                         </>
                                     )
