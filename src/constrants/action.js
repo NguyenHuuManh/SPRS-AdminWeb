@@ -91,6 +91,7 @@ export const GET_ACC = `${URL}/sprs/api/users/admin`
 export const CREATE_EVENT = `${URL}/sprs/api/reliefPoint-manage/create-admin`
 export const UPDATE_EVENT = `${URL}/sprs/api/reliefPoint-manage/update-admin`
 export const GET_EVENTS = `${URL}/sprs/api/reliefPoint-manage/get-admin`
+export const GET_EVENTS_ASS = `${URL}/sprs/api/reliefPoint-manage/get-admin-assign`
 export const DELETE_EVENT = `${URL}/sprs/api/reliefPoint-manage/delete-event`
 export const ASSIGN = `${URL}/sprs/api/reliefPoint-manage/assign`
 export const UN_ASSIGN = `${URL}/sprs/api/reliefPoint-manage/unassign`

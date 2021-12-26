@@ -1,4 +1,4 @@
-import { ASSIGN, CREATE_EVENT, DELETE_EVENT, GET_ASSIGN, GET_EVENTS, GET_UN_ASSIGN, ITEMS, UN_ASSIGN, UPDATE_EVENT, UPDATE_STATUS_RELIEF_POINT, UPLOAD_IMG_RELIEF } from "src/constrants/action";
+import { ASSIGN, CREATE_EVENT, DELETE_EVENT, GET_ASSIGN, GET_EVENTS, GET_EVENTS_ASS, GET_UN_ASSIGN, ITEMS, UN_ASSIGN, UPDATE_EVENT, UPDATE_STATUS_RELIEF_POINT, UPLOAD_IMG_RELIEF } from "src/constrants/action";
 import { convertToQuery } from "src/helps/function";
 import httpServices from "src/services/httpServices";
 
@@ -13,6 +13,11 @@ export const apiCreateEvent = async (body) => {
 
 export const getEvents = async (body) => {
     return await httpServices.post(`${GET_EVENTS}`, body);
+};
+
+
+export const getEventsAss = async (body) => {
+    return await httpServices.post(`${GET_EVENTS_ASS}`, body);
 };
 
 export const apiDeleteEvent = async (params) => {

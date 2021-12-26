@@ -2,7 +2,7 @@ import { CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, 
 import { Field, Formik } from "formik";
 import { debounce } from "lodash";
 import React, { useCallback, useEffect, useState } from "react";
-import { getEvents } from "src/apiFunctions/Event";
+import { getEvents, getEventsAss } from "src/apiFunctions/Event";
 import { calcItemStart } from "src/helps/function";
 import AppSelectStautusAccount from "src/views/components/AppSelectStautusAccount";
 import AppSelectStautusEvent from "src/views/components/AppSelectStautusEvent";
@@ -21,9 +21,9 @@ const UserTable = (props) => {
             pageIndex: pageSize.page - 1,
             search: key,
             sort: sort,
-            status_store: status
+            // status_store: status
         }
-        getEvents(param).then((e) => {
+        getEventsAss(param).then((e) => {
             if (e?.status == 200) {
                 if (e.data.code == '200') {
                     setData(e.data.obj);
@@ -82,7 +82,7 @@ const UserTable = (props) => {
                                         />
                                     </CInputGroup>
                                 </CCol>
-                                <CCol md={3}>
+                                {/* <CCol md={3}>
                                     <Field
                                         component={AppSelectStautusEvent}
                                         name='status'
@@ -96,7 +96,7 @@ const UserTable = (props) => {
                                             setPageSize({ ...pageSize, page: 1, size: size })
                                         }}
                                     />
-                                </CCol>
+                                </CCol> */}
                             </CRow>
                         </>
                     )}

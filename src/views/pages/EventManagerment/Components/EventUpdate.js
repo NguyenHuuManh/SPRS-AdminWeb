@@ -36,7 +36,6 @@ const EventUpdate = (props) => {
             setImage('');
         }
     }, [isOpen, data]);
-    // console.log(address, 'addressssss');
 
     const updateImg = () => {
         if (isEmpty(image)) {
@@ -56,12 +55,6 @@ const EventUpdate = (props) => {
             setLoading(true);
             if (response.status == 200) {
                 if (response.data.code == '200') {
-                    // appToast({
-                    //     toastOptions: { type: "success" },
-                    //     description: 'Cập nhật ảnh thành công',
-                    // });
-                    // setPageSize({ ...pageSize });
-                    // setIsOpen(false);
                     return;
                 }
 
@@ -81,12 +74,6 @@ const EventUpdate = (props) => {
         })
     }
     const callUpdate = (body) => {
-
-        confirmAlert({
-            title: 'Cập nhật sự kiện',
-            message: 'Nếu thời gian của sự kiện được thay đổi, có thể mất vài giây để trạng thái của sự kiện được cập nhật, vui lòng reload lại trang để thấy được sư thay đổi',
-            buttons: []
-        });
         if (image) {
             updateImg();
         }
@@ -195,7 +182,7 @@ const EventUpdate = (props) => {
                                             callUpdate(body);
                                         }}
                                     >
-                                        {({ values }) => (
+                                        {({ values, resetForm }) => (
                                             <Form>
                                                 <CRow>
                                                     <CCol lg={12}>
@@ -256,7 +243,7 @@ const EventUpdate = (props) => {
                                                 <CRow>
                                                     <CCol md={12}>
                                                         <div className="d-flex justify-content-end align-items-end" style={{ width: "100%", paddingTop: 40 }}>
-                                                            <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false) }}>Hủy</CButton>
+                                                            <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { setIsOpen(false); resetForm() }}>Hủy</CButton>
                                                             {/* <CButton type="button" color="primary" style={{ marginRight: 10 }} onClick={() => { updateImg() }}>Cập nhật ảnh</CButton> */}
                                                             <CButton type="submit" color="primary" >Cập nhật thông tin</CButton>
                                                         </div>

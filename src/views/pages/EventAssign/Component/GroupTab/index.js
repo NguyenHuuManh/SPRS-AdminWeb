@@ -72,13 +72,11 @@ const Group = () => {
                                     getAssign();
                                     return;
                                 }
-                                if (e?.data?.code === '403') {
-                                    appToast({
-                                        toastOptions: { type: "error" },
-                                        description: e?.data?.message,
-                                    });
-                                    return;
-                                }
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: e?.data?.message,
+                                });
+                                return;
                             }
                         })
                     }
@@ -104,7 +102,13 @@ const Group = () => {
                             if (e?.status === 200) {
                                 if (e?.data?.code === '200') {
                                     getAssign();
+                                    return;
                                 }
+                                appToast({
+                                    toastOptions: { type: "error" },
+                                    description: e?.data?.message,
+                                });
+                                return;
                             }
                         })
                     }

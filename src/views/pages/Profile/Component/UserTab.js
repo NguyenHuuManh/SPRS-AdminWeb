@@ -147,7 +147,7 @@ const UserTab = () => {
                                                     component={InputField}
                                                     name="phone"
                                                     // isPhone
-                                                    disabled={!editAble}
+                                                    disabled={true}
                                                 />
                                             </CCol>
                                         </CRow>
