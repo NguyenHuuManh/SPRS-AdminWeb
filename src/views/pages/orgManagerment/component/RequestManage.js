@@ -1,18 +1,32 @@
-import { CButton, CCard, CCardBody, CCol, CRow, CCardHeader, CInputGroup, CInput } from "@coreui/react";
+import { CButton, CCard, CCardBody, CCol, CRow, CCardHeader, CInputGroup, CInput, CPagination } from "@coreui/react";
+import { Field, Formik } from "formik";
 import { debounce, isEmpty } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { FaEye } from 'react-icons/fa';
 import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
+import AppSelectAccountTypes from "src/views/components/AppSelectAccountTypes";
+import AppSelectStautusEvent from "src/views/components/AppSelectStautusEvent";
 import { appToast } from 'src/views/components/AppToastContainer';
+const size = 10;
 const RequestManage = (props) => {
     const { tabActive } = props
     const [items, setItems] = useState([]);
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
+    const [pageSize, setPageSize] = useState({ page: 1, size: size });
+    const [accountType, setAccountType] = useState('');
+
     const callGetReques = (value) => {
-        apiGetRequestAdminORG({ search: value }).then((res) => {
+        const params = {
+            pageIndex: pageSize.page,
+            pageSize: pageSize.size,
+            accountType: accountType,
+            statusType: 'uncheck',
+            search: key
+        }
+        apiGetRequestAdminORG(params).then((res) => {
             console.log(res, "res");
             if (res?.status && res.data.code) {
                 setData(res.data.obj);
@@ -20,12 +34,16 @@ const RequestManage = (props) => {
         });
     }
 
-    const debounceSearch = useCallback(debounce((nextValue) => callGetReques(nextValue), 500), []);
+    const debounceSearch = useCallback(debounce((nextValue) => setPageSize({ ...pageSize, page: 1, size: size }), 500), []);
 
     useEffect(() => {
         if (tabActive !== 'RequestManage') return;
-        callGetReques("");
-    }, [tabActive])
+        setPageSize({ ...pageSize, page: 1, size: size })
+    }, [tabActive]);
+
+    useEffect(() => {
+        callGetReques(key);
+    }, [pageSize])
 
     useEffect(() => {
         setItems([]);
@@ -81,6 +99,10 @@ const RequestManage = (props) => {
         setKey(values.target.value);
         debounceSearch(values.target.value);
     }
+
+    const pageChange = (newPage) => {
+        setPageSize({ ...pageSize, page: newPage });
+    };
     return (
         <CCard>
             <CCardHeader>
@@ -92,22 +114,48 @@ const RequestManage = (props) => {
                 </CRow>
             </CCardHeader>
             <CCardBody>
-                <div style={{ width: "100%", display: "flex" }}>
-                    <div style={{ width: "30%" }}>
-                        <label className="inputTitle">Tìm kiếm</label>
-                        <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
-                            <CInput
-                                placeholder="Nhập tên tài khoản . . ."
-                                onChange={onChange}
-                                value={key}
-                            />
-                        </CInputGroup>
-                    </div>
-                    <div style={{ width: "70%", paddingTop: 34, justifyContent: "flex-end", display: "flex", alignItems: "flex-start" }}>
-                        <CButton type="submit" color="secondary" onClick={accpetRequestORG} disabled={isEmpty(items)}>Duyệt</CButton>
-                    </div>
-                </div>
-
+                <Formik
+                    initialValues={{
+                        status: "",
+                    }}
+                >
+                    {() => (
+                        <>
+                            <CRow>
+                                <CCol md={3}>
+                                    <label className="inputTitle">Tìm kiếm</label>
+                                    <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
+                                        <CInput
+                                            placeholder="Nhập tên tài khoản . . ."
+                                            onChange={onChange}
+                                            value={key}
+                                        />
+                                    </CInputGroup>
+                                </CCol>
+                                <CCol md={3}>
+                                    <Field
+                                        component={AppSelectAccountTypes}
+                                        name='status'
+                                        title="Trạng thái"
+                                        functionProps={(item) => {
+                                            if (item?.id == 'Store' || item?.id == 'Organization') {
+                                                setAccountType(item?.id);
+                                            } else {
+                                                setAccountType('');
+                                            }
+                                            setPageSize({ ...pageSize, page: 1, size: size })
+                                        }}
+                                    />
+                                </CCol>
+                                <CCol md={6}>
+                                    <div style={{ width: "100%", paddingTop: 34, justifyContent: "flex-end", display: "flex", alignItems: "flex-end" }}>
+                                        <CButton type="submit" color="secondary" onClick={accpetRequestORG} disabled={isEmpty(items)}>Duyệt</CButton>
+                                    </div>
+                                </CCol>
+                            </CRow>
+                        </>
+                    )}
+                </Formik>
                 <table className="table table-hover">
                     <thead className="table-active">
                         <th>STT</th>
@@ -121,12 +169,12 @@ const RequestManage = (props) => {
                         <th>
                             <input type="checkbox"
                                 onChange={handleCheckAll}
-                                checked={Boolean(isAllItemOnPageChecked(items, data, "id"))}
+                                checked={Boolean(isAllItemOnPageChecked(items, data?.object || [], "id"))}
                             /></th>
                     </thead>
                     <tbody>
                         {
-                            data.map((item, index) => {
+                            data?.object?.map((item, index) => {
                                 return (
                                     <tr
                                         key={item.id}
@@ -141,7 +189,7 @@ const RequestManage = (props) => {
                                         <td>{item?.user?.groups_user[0].name}</td>
                                         <td>{item?.user?.address?.subDistrict.name + '-' + item?.user?.address?.district.name + '-' + item?.user?.address?.city.name}</td>
                                         <td>
-                                            <CButton color="secondary" onClick={() => { rejectRequestORG(item) }}>
+                                            <CButton color="danger" onClick={() => { rejectRequestORG(item) }}>
                                                 Từ chối
                                             </CButton>
                                         </td>
@@ -157,6 +205,12 @@ const RequestManage = (props) => {
                         }
                     </tbody>
                 </table>
+                <CPagination
+                    activePage={pageSize.page}
+                    onActivePageChange={pageChange}
+                    pages={data?.totalPage || 1}
+                    align="center"
+                />
             </CCardBody>
         </CCard>
     )

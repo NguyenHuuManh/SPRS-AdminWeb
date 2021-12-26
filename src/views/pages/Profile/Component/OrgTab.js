@@ -7,7 +7,6 @@ import { useDispatch } from "react-redux";
 import { apiGetORG, apiUpdateORG } from "src/apiFunctions/authencation";
 import { trimmedObject } from "src/helps/function";
 import { getProfileRequest } from "src/redux/modules/profile";
-import AppDatePicker from "src/views/components/AppDatePicker";
 import AppTimePicker from "src/views/components/AppTimePicker";
 import { appToast } from "src/views/components/AppToastContainer";
 import InputField from "src/views/components/InputField";
@@ -102,7 +101,7 @@ const UserTab = () => {
                     validateOnBlur={false}
                     enableReinitialize
                     onSubmit={(values) => {
-                        const objTrimmed = trimmedObject(values)
+                        const objTrimmed = values
                         const body = {
                             id: objTrimmed.id,
                             name: objTrimmed.name || "",

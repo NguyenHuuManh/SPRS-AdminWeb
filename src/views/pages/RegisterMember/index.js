@@ -30,32 +30,48 @@ const RegisterMember = () => {
   const [otpModal, setOtpModal] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const getOtp = (values) => {
-    const bodyOTP = {
-      to: '+84' + values.phone.substring(1),
-      username: values.username,
-    }
-    setLoading(true);
-    apiGetOtpSignup(bodyOTP).then((e) => {
-      if (e?.status == 200) {
-        if (e.data.code == "200") {
-          setOtpModal(true);
-          setTimeStart({ value: 1 });
-          setDisableOTP(false)
-          return;
-        }
+  const singup = (values) => {
+    apiSigupUserORG(values).then((res) => {
+      if (res.status == 200 && res.data.code == "200") {
         appToast({
-          toastOptions: { type: "error" },
-          description: e.data?.message,
+          toastOptions: { type: "success" },
+          description: "Đăng ký thành công",
         });
       } else {
         appToast({
           toastOptions: { type: "error" },
-          description: 'Hệ thống đang bảo trì',
+          description: res?.data?.message || "Đăng ký không thành công, hệ thống đang bảo trì",
         });
       }
-    }).finally(() => { setLoading(false) })
+    })
   }
+
+  // const getOtp = (values) => {
+  //   const bodyOTP = {
+  //     to: '+84' + values.phone.substring(1),
+  //     username: values.username,
+  //   }
+  //   setLoading(true);
+  //   apiGetOtpSignup(bodyOTP).then((e) => {
+  //     if (e?.status == 200) {
+  //       if (e.data.code == "200") {
+  //         setOtpModal(true);
+  //         setTimeStart({ value: 1 });
+  //         setDisableOTP(false)
+  //         return;
+  //       }
+  //       appToast({
+  //         toastOptions: { type: "error" },
+  //         description: e.data?.message,
+  //       });
+  //     } else {
+  //       appToast({
+  //         toastOptions: { type: "error" },
+  //         description: 'Hệ thống đang bảo trì',
+  //       });
+  //     }
+  //   }).finally(() => { setLoading(false) })
+  // }
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
@@ -114,8 +130,9 @@ const RegisterMember = () => {
                         },
 
                       }
-                      setBody(user);
-                      getOtp(values);
+                      // setBody(user);
+                      // getOtp(values);
+                      singup(user);
                     }}
                   >
                     {({ submitForm, errors, values }) => (
@@ -198,7 +215,7 @@ const RegisterMember = () => {
                       </>
                     )}
                   </Formik>
-                  <OtpVerify
+                  {/* <OtpVerify
                     isOpen={otpModal}
                     setIsOpen={setOtpModal}
                     body={body}
@@ -207,7 +224,7 @@ const RegisterMember = () => {
                     timeStart={timeStart}
                     disableOTP={disableOTP}
                     setDisableOTP={setDisableOTP}
-                  />
+                  /> */}
                 </CForm>
               </CCardBody>
 

@@ -17,20 +17,23 @@ const Group = () => {
     const getAssigned = (key, itemSelected) => {
         if (!itemSelected?.id) return;
         apiGetAssigned({ rp_id: itemSelected?.id, search: key }).then((e) => {
-            setDataAssigned(e.data.obj);
+            if (e?.data?.code == 200) {
+                setDataAssigned(e.data.obj);
+            }
         })
     }
     const getUnAssigned = (key, itemSelected) => {
         if (!itemSelected?.id) return;
         apiGetUnAssigned({ rp_id: itemSelected?.id, search: key }).then((e) => {
-            setDataUnAssigned(e.data.obj);
+            if (e?.data?.code == 200) {
+                setDataUnAssigned(e.data.obj);
+            }
         })
     }
     const debounceSearch1 = useCallback(debounce((key, itemSelected) => getAssigned(key, itemSelected), 500), []);
     const debounceSearch2 = useCallback(debounce((key, itemSelected) => getUnAssigned(key, itemSelected), 500), []);
     const onChange1 = (values) => {
         setKey1(values.target.value);
-        // console.log('itemSelect', itemSelected)
         debounceSearch1(values.target.value, itemSelected);
     }
     const onChange2 = (values) => {
@@ -44,7 +47,6 @@ const Group = () => {
     }
 
     useEffect(() => {
-        // console.log(itemSelected, 'itemSelected');
         setKey1('');
         setKey2('')
         if (isEmpty(itemSelected) || !itemSelected) {
@@ -163,7 +165,7 @@ const Group = () => {
                                                     <td>{item?.full_name}</td>
                                                     <td>{item?.phone}</td>
                                                     <td>
-                                                        <CButton color='primary'
+                                                        <CButton color={item.isAvailable == 0 ? 'secondary' : 'primary'}
                                                             onClick={() => { callAssign({ source_id: item.id, target_id: itemSelected.id }) }}
                                                             disabled={item.isAvailable == 0}
                                                         >

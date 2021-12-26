@@ -13,7 +13,6 @@ const UserTable = (props) => {
     const [data, setData] = useState({});
     const [key, setKey] = useState("");
     const [pageSize, setPageSize] = useState({ page: 1, size: size });
-    const [status, setStatus] = useState(2);
     const [sort, setSort] = useState(true);
     const searchByName = (key) => {
         const param = {
@@ -21,7 +20,6 @@ const UserTable = (props) => {
             pageIndex: pageSize.page - 1,
             search: key,
             sort: sort,
-            // status_store: status
         }
         getEventsAss(param).then((e) => {
             if (e?.status == 200) {
@@ -82,21 +80,6 @@ const UserTable = (props) => {
                                         />
                                     </CInputGroup>
                                 </CCol>
-                                {/* <CCol md={3}>
-                                    <Field
-                                        component={AppSelectStautusEvent}
-                                        name='status'
-                                        title="Trạng thái"
-                                        functionProps={(item) => {
-                                            if (item?.id == 0 || item?.id == 1) {
-                                                setStatus(item?.id);
-                                            } else {
-                                                setStatus(2);
-                                            }
-                                            setPageSize({ ...pageSize, page: 1, size: size })
-                                        }}
-                                    />
-                                </CCol> */}
                             </CRow>
                         </>
                     )}
@@ -110,6 +93,7 @@ const UserTable = (props) => {
                             <th>Ngày mở cửa</th>
                             <th>Ngày đóng cửa</th>
                             <th>Địa chỉ</th>
+                            <th>Trạng thái</th>
                         </thead>
                         <tbody>
                             {
@@ -126,6 +110,19 @@ const UserTable = (props) => {
                                             <td>{item?.open_time}</td>
                                             <td>{item?.close_time}</td>
                                             <td>{item?.address?.subDistrict.name + ' ' + item?.address?.district.name + ' ' + item?.address?.city.name}</td>
+                                            <td
+                                                style={{
+                                                    color: item?.status == 0 ? 'orange'
+                                                        : item?.status == 1 ? '#32a864' :
+                                                            item?.status == 2 ? 'gray' :
+                                                                item?.status == 3 ? 'red' : ''
+                                                }}>
+                                                {
+                                                    item?.status == 0 ? 'Đã kết thúc'
+                                                        : item?.status == 1 ? 'Đang hoạt động' :
+                                                            item?.status == 2 ? 'Sắp diễn ra' :
+                                                                item?.status == 3 ? 'Ngừng hoạt động' : ''}
+                                            </td>
                                         </tr>
                                     )
                                 })

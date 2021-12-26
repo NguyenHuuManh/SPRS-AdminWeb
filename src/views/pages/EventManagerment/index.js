@@ -18,7 +18,7 @@ const EventManagerment = () => {
     const [data, setData] = useState({});
     const [key, setKey] = useState("");
     const [pageSize, setPageSize] = useState({ page: page, size: size });
-    const [status, setStatus] = useState(2);
+    const [status, setStatus] = useState(4);
     const [sort, setSort] = useState(true);
     const [detail, setDetail] = useState(false);
     const [update, setUpdate] = useState(false);
