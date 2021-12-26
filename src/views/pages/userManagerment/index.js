@@ -136,7 +136,11 @@ const UserManager = () => {
                                                     <td>{item.username}</td>
                                                     <td>{item.full_name}</td>
                                                     <td>{item.phone}</td>
-                                                    <td>{item?.isActive ? 'Đang hoạt động' : 'Bị khóa'}</td>
+                                                    <td
+                                                        style={{ color: item?.isActive ? '#32a864' : 'gray' }}
+                                                    >
+                                                        {item?.isActive ? 'Đang hoạt động' : 'Bị khóa'}
+                                                    </td>
                                                     <td>
                                                         {item?.isActive ? (
                                                             <CButton color="danger" onClick={() => { unActive(item?.id) }} style={{ width: 200 }}>

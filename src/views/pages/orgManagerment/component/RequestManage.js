@@ -1,12 +1,10 @@
-import { CButton, CCard, CCardBody, CCol, CRow, CCardHeader, CInputGroup, CInput, CPagination } from "@coreui/react";
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from "@coreui/react";
 import { Field, Formik } from "formik";
 import { debounce, isEmpty } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
-import { FaEye } from 'react-icons/fa';
 import { apiAcceptRequestAdminORG, apiGetRequestAdminORG, apiRejectRequestAdminORG } from 'src/apiFunctions/authencation';
 import { addAllItemOfPage, addAnItems, isAllItemOnPageChecked, removeCheckAllItems } from 'src/helps/checklistFunction';
 import AppSelectAccountTypes from "src/views/components/AppSelectAccountTypes";
-import AppSelectStautusEvent from "src/views/components/AppSelectStautusEvent";
 import { appToast } from 'src/views/components/AppToastContainer';
 const size = 10;
 const RequestManage = (props) => {
@@ -208,7 +206,7 @@ const RequestManage = (props) => {
                 <CPagination
                     activePage={pageSize.page}
                     onActivePageChange={pageChange}
-                    pages={data?.totalPage || 1}
+                    pages={data?.totalPages || 1}
                     align="center"
                 />
             </CCardBody>

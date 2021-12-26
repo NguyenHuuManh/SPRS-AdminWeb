@@ -1,24 +1,36 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CRow } from "@coreui/react";
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from "@coreui/react";
 import React, { useEffect, useState, useCallback } from "react";
 import { FaEye } from 'react-icons/fa';
 import { apiGetRequestRejectedAdminORG } from 'src/apiFunctions/authencation';
 import { debounce } from "lodash-es";
+import { Field, Formik } from "formik";
+import AppSelectAccountTypes from "src/views/components/AppSelectAccountTypes";
+const size = 10;
 const RejectManage = (props) => {
     const { tabActive } = props
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
+    const [pageSize, setPageSize] = useState({ page: 1, size: size });
+    const [accountType, setAccountType] = useState('');
 
 
     const callGetRequestRejected = (key) => {
-        apiGetRequestRejectedAdminORG({ search: key }).then((res) => {
+        const params = {
+            pageIndex: pageSize.page,
+            pageSize: pageSize.size,
+            accountType: accountType,
+            statusType: 'reject',
+            search: key
+        }
+        apiGetRequestRejectedAdminORG(params).then((res) => {
             console.log(res, "res");
             if (res?.status && res.data.code) {
                 setData(res.data.obj);
             }
         });
     }
-    const debounceSearch = useCallback(debounce((key) => callGetRequestRejected(key), 500), []);
+    const debounceSearch = useCallback(debounce((key) => setPageSize({ ...pageSize, page: 1, size: size }), 500), []);
 
     const onChange = (values) => {
         setKey(values.target.value);
@@ -27,7 +39,13 @@ const RejectManage = (props) => {
     useEffect(() => {
         if (tabActive !== 'RejectManage') return;
         callGetRequestRejected(key);
-    }, [tabActive])
+    }, [tabActive]);
+    useEffect(() => {
+        callGetRequestRejected(key);
+    }, [pageSize]);
+    const pageChange = (newPage) => {
+        setPageSize({ ...pageSize, page: newPage });
+    };
     return (
         <CCard>
             <CCardHeader>
@@ -38,16 +56,43 @@ const RejectManage = (props) => {
                 </CRow>
             </CCardHeader>
             <CCardBody>
-                <div style={{ width: "30%" }}>
-                    <label className="inputTitle">Tìm kiếm</label>
-                    <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
-                        <CInput
-                            placeholder="Nhập tên tài khoản . . ."
-                            onChange={onChange}
-                            value={key}
-                        />
-                    </CInputGroup>
-                </div>
+                <Formik
+                    initialValues={{
+                        status: "",
+                    }}
+                >
+                    {() => (
+                        <>
+                            <CRow>
+                                <CCol md={3}>
+                                    <label className="inputTitle">Tìm kiếm</label>
+                                    <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
+                                        <CInput
+                                            placeholder="Nhập tên tài khoản . . ."
+                                            onChange={onChange}
+                                            value={key}
+                                        />
+                                    </CInputGroup>
+                                </CCol>
+                                <CCol md={3}>
+                                    <Field
+                                        component={AppSelectAccountTypes}
+                                        name='status'
+                                        title="Trạng thái"
+                                        functionProps={(item) => {
+                                            if (item?.id == 'Store' || item?.id == 'Organization') {
+                                                setAccountType(item?.id);
+                                            } else {
+                                                setAccountType('');
+                                            }
+                                            setPageSize({ ...pageSize, page: 1, size: size })
+                                        }}
+                                    />
+                                </CCol>
+                            </CRow>
+                        </>
+                    )}
+                </Formik>
                 <table className="table table-hover">
                     <thead className="table-active">
                         <th>STT</th>
@@ -59,7 +104,7 @@ const RejectManage = (props) => {
                     </thead>
                     <tbody>
                         {
-                            data.map((item, index) => {
+                            data?.object?.map((item, index) => {
                                 return (
                                     <tr
                                         key={item.id}
@@ -78,6 +123,12 @@ const RejectManage = (props) => {
                         }
                     </tbody>
                 </table>
+                <CPagination
+                    activePage={pageSize.page}
+                    onActivePageChange={pageChange}
+                    pages={data?.totalPages || 1}
+                    align="center"
+                />
             </CCardBody>
         </CCard>
     )

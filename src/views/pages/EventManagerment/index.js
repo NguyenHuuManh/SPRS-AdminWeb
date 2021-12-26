@@ -227,7 +227,8 @@ const EventManagerment = () => {
                                                         : item?.status == 1 ? '#32a864' :
                                                             item?.status == 2 ? 'gray' :
                                                                 item?.status == 3 ? 'red' : ''
-                                                }}>
+                                                }}
+                                            >
                                                 {
                                                     item?.status == 0 ? 'Đã kết thúc'
                                                         : item?.status == 1 ? 'Đang hoạt động' :

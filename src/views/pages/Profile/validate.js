@@ -3,14 +3,14 @@ import { removeAscent } from "src/helps/function";
 import * as Yup from "yup";
 
 export const updateProfile = Yup.object().shape({
-    username: Yup.string().required("Tên tài khoản không được bỏ trống").nullable()
-        .test("test", "Tên tài khoản tối thiểu 4, tối đa 16 kí tự chỉ gồm chữ không dấu và số", function () {
-            const { parent } = this;
-            const { username } = parent;
-            var format = /^[0-9]{4,16}$/;
-            var format1 = /^[0-9A-Za-z]{4,16}$/;
-            return format1.test(username?.trim()) && !format.test(username?.trim());
-        }),
+    // username: Yup.string().required("Tên tài khoản không được bỏ trống").nullable()
+    //     .test("test", "Tên tài khoản tối thiểu 4, tối đa 16 kí tự chỉ gồm chữ không dấu và số", function () {
+    //         const { parent } = this;
+    //         const { username } = parent;
+    //         var format = /^[0-9]{4,16}$/;
+    //         var format1 = /^[0-9A-Za-z]{4,16}$/;
+    //         return format1.test(username?.trim()) && !format.test(username?.trim());
+    //     }),
     phone: Yup.string().required("Số điện thoại không được bỏ trống").nullable().test('checkphone', "Số điện thoại không hợp lệ", function () {
         const { parent } = this;
         const { phone } = parent;

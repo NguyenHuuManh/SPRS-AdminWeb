@@ -210,10 +210,12 @@ const AccountManagerment = () => {
                                             <td>{item?.full_name}</td>
                                             <td>{item?.username}</td>
                                             <td>{item?.phone}</td>
-                                            <td>{item?.status == 'Actived' ? 'Đang hoạt động' : 'Bị khóa'}</td>
+                                            <td
+                                                style={{ color: item?.status == 'Actived' ? '#32a864' : 'gray' }}
+                                            >{item?.status == 'Actived' ? 'Đang hoạt động' : 'Bị khóa'}</td>
                                             <td>
                                                 {item?.status == 'Actived' ? (
-                                                    <CButton color="secondary" onClick={() => { apiBanAcc(item) }} style={{ width: 200 }}>
+                                                    <CButton color="danger" onClick={() => { apiBanAcc(item) }} style={{ width: 200 }}>
                                                         Khóa tài khoản
                                                     </CButton>
                                                 ) : (

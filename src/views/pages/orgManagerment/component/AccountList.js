@@ -1,15 +1,27 @@
-import { CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CRow } from "@coreui/react";
+import { CCard, CCardBody, CCardHeader, CCol, CInput, CInputGroup, CPagination, CRow } from "@coreui/react";
+import { Field, Formik } from "formik";
 import { debounce } from "lodash-es";
 import React, { useCallback, useEffect, useState } from "react";
 import { apiGetAccountAccepted } from 'src/apiFunctions/authencation';
+import AppSelectAccountTypes from "src/views/components/AppSelectAccountTypes";
+const size = 10;
 const AccountList = (props) => {
     const { tabActive } = props
     const [itemSelected, setItemSelected] = useState({});
     const [data, setData] = useState([]);
     const [key, setKey] = useState("");
+    const [pageSize, setPageSize] = useState({ page: 1, size: size });
+    const [accountType, setAccountType] = useState('');
 
     const callGetRequestRejected = (key) => {
-        apiGetAccountAccepted({ search: key }).then((res) => {
+        const params = {
+            pageIndex: pageSize.page,
+            pageSize: pageSize.size,
+            accountType: accountType,
+            statusType: 'accept',
+            search: key
+        }
+        apiGetAccountAccepted(params).then((res) => {
             console.log(res, "res");
             if (res?.status && res.data.code) {
                 setData(res.data.obj);
@@ -17,18 +29,25 @@ const AccountList = (props) => {
         });
     }
 
-    const debounceSearch = useCallback(debounce((key) => callGetRequestRejected(key), 500), []);
+    const debounceSearch = useCallback(debounce((key) => setPageSize({ ...pageSize, page: 1, size: size }), 500), []);
 
     useEffect(() => {
         if (tabActive !== 'AccountList') return;
         callGetRequestRejected("");
     }, [tabActive]);
 
+    useEffect(() => {
+        callGetRequestRejected("");
+    }, [pageSize])
 
     const onChange = (values) => {
         setKey(values.target.value);
         debounceSearch(values.target.value);
     }
+
+    const pageChange = (newPage) => {
+        setPageSize({ ...pageSize, page: newPage });
+    };
     return (
         <CCard>
             <CCardHeader>
@@ -39,16 +58,43 @@ const AccountList = (props) => {
                 </CRow>
             </CCardHeader>
             <CCardBody>
-                <div style={{ width: "30%" }}>
-                    <label className="inputTitle">Tìm kiếm</label>
-                    <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
-                        <CInput
-                            placeholder="Nhập tên tài khoản . . ."
-                            onChange={onChange}
-                            value={key}
-                        />
-                    </CInputGroup>
-                </div>
+                <Formik
+                    initialValues={{
+                        status: "",
+                    }}
+                >
+                    {() => (
+                        <>
+                            <CRow>
+                                <CCol md={3}>
+                                    <label className="inputTitle">Tìm kiếm</label>
+                                    <CInputGroup className="mb-3" style={{ display: "flex", borderRadius: 10 }}>
+                                        <CInput
+                                            placeholder="Nhập tên tài khoản . . ."
+                                            onChange={onChange}
+                                            value={key}
+                                        />
+                                    </CInputGroup>
+                                </CCol>
+                                <CCol md={3}>
+                                    <Field
+                                        component={AppSelectAccountTypes}
+                                        name='status'
+                                        title="Trạng thái"
+                                        functionProps={(item) => {
+                                            if (item?.id == 'Store' || item?.id == 'Organization') {
+                                                setAccountType(item?.id);
+                                            } else {
+                                                setAccountType('');
+                                            }
+                                            setPageSize({ ...pageSize, page: 1, size: size })
+                                        }}
+                                    />
+                                </CCol>
+                            </CRow>
+                        </>
+                    )}
+                </Formik>
                 <table className="table table-hover">
                     <thead className="table-active">
                         <th>STT</th>
@@ -60,7 +106,7 @@ const AccountList = (props) => {
                     </thead>
                     <tbody>
                         {
-                            data.map((item, index) => {
+                            data?.object?.map((item, index) => {
                                 return (
                                     <tr
                                         key={item.id}
@@ -79,6 +125,12 @@ const AccountList = (props) => {
                         }
                     </tbody>
                 </table>
+                <CPagination
+                    activePage={pageSize.page}
+                    onActivePageChange={pageChange}
+                    pages={data?.totalPages || 1}
+                    align="center"
+                />
             </CCardBody>
         </CCard>
     )
