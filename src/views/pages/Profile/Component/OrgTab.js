@@ -124,7 +124,7 @@ const UserTab = () => {
                                     id: 0,
                                     name: orgAdress?.subDistrict,
                                 },
-                                addressLine: "",
+                                addressLine: objTrimmed.addressLine,
                                 GPS_lati: orgAdress?.GPS_lati + "",
                                 GPS_long: orgAdress?.GPS_long + "",
                                 gps_lati: orgAdress?.GPS_lati + "",
