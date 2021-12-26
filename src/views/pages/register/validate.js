@@ -49,14 +49,6 @@ export const register = Yup.object().shape({
             const currentDate = moment().format('DD-MM-YYYY');
             return moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
         }),
-    // nameOrg: Yup.string().required("Tên tổ chức k được bỏ trống").nullable()
-    //     .test("test", "Tên tổ chức không chứa số, kí tự đặc biệt và ít nhất 4 ký tự chữ", function () {
-    //         const { parent } = this;
-    //         const { nameOrg } = parent;
-    //         const nameStrim = removeAscent(nameOrg);
-    //         let regex = /^[a-zA-Z]+(?:\s[a-zA-Z]+)+$/
-    //         return regex.test(nameStrim?.trim());
-    //     }),
     nameOrg: Yup.string().required("Họ và tên không được bỏ trống").nullable()
         .test("test", "Tên tổ chức không có kí tự đặc biệt,có ít nhất 4 ký tự chữ", function () {
             const { parent } = this;

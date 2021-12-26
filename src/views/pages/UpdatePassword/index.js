@@ -6,13 +6,15 @@ import {
     CForm, CRow
 } from '@coreui/react'
 import { Field, Formik } from 'formik'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { apiUpdatePass } from 'src/apiFunctions/authencation'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import { updatePass } from './validate'
 
 const UpdatePassword = () => {
+
+    const ref = useRef();
     const OnchangePass = (values) => {
         apiUpdatePass(values).then((e) => {
             // console.log("e update P", e);
@@ -22,6 +24,7 @@ const UpdatePassword = () => {
                         toastOptions: { type: "success" },
                         description: "Cập nhật mật khẩu thành công",
                     });
+                    ref.current.resetForm();
                 } else {
                     appToast({
                         toastOptions: { type: "error" },
@@ -48,6 +51,7 @@ const UpdatePassword = () => {
                             <CCardBody className="p-4">
                                 <CForm>
                                     <Formik
+                                        innerRef={ref}
                                         initialValues={{
                                             oldPassword: "",
                                             newPassword: "",
@@ -77,7 +81,7 @@ const UpdatePassword = () => {
                                                     title="Mật khẩu mới"
                                                     maxTitle={200}
                                                     type="password"
-                                                    security
+                                                // security={false}
                                                 />
                                                 <Field
                                                     horizontal

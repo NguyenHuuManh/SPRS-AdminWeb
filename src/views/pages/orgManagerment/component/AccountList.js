@@ -13,7 +13,7 @@ const AccountList = (props) => {
     const [pageSize, setPageSize] = useState({ page: 1, size: size });
     const [accountType, setAccountType] = useState('');
 
-    const callGetRequestRejected = (key) => {
+    const callGetRequestRejected = () => {
         const params = {
             pageIndex: pageSize.page,
             pageSize: pageSize.size,
@@ -33,11 +33,11 @@ const AccountList = (props) => {
 
     useEffect(() => {
         if (tabActive !== 'AccountList') return;
-        callGetRequestRejected("");
+        callGetRequestRejected();
     }, [tabActive]);
 
     useEffect(() => {
-        callGetRequestRejected("");
+        callGetRequestRejected();
     }, [pageSize])
 
     const onChange = (values) => {
@@ -96,7 +96,7 @@ const AccountList = (props) => {
                     )}
                 </Formik>
                 <table className="table table-hover">
-                    <thead className="table-active">
+                    <thead>
                         <th>STT</th>
                         <th>Tên đầy đủ</th>
                         <th>Tên tài khoản</th>
@@ -112,6 +112,7 @@ const AccountList = (props) => {
                                         key={item.id}
                                         className={`${item.id == itemSelected?.id && "table-active"}`}
                                         onClick={() => { setItemSelected(item) }}
+                                    // style={{ backgroundColor: '#dce1e9' }}
                                     >
                                         <td>{index + 1}</td>
                                         <td>{item?.user?.full_name}</td>
@@ -128,7 +129,7 @@ const AccountList = (props) => {
                 <CPagination
                     activePage={pageSize.page}
                     onActivePageChange={pageChange}
-                    pages={data?.totalPages || 1}
+                    pages={data?.totalPage || 1}
                     align="center"
                 />
             </CCardBody>

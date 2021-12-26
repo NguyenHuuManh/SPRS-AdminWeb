@@ -29,8 +29,18 @@ const CreateNotificaton = () => {
                         toastOptions: { type: "success" },
                         description: "Gửi thông báo thành công",
                     });
+                    return;
                 }
+                appToast({
+                    toastOptions: { type: "error" },
+                    description: e.data.message,
+                });
+                return;
             }
+            appToast({
+                toastOptions: { type: "error" },
+                description: 'Chức năng đang bảo trì',
+            });
         }).finally(() => {
             setLoading(false);
         })

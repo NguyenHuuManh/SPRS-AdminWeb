@@ -108,6 +108,7 @@ const UserTab = () => {
                             founded: objTrimmed.founded || "",
                             description: objTrimmed.description || "",
                             address: {
+                                id: org.address.id,
                                 city: {
                                     code: "",
                                     id: 0,

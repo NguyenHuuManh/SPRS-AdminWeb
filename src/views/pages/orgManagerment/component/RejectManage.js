@@ -126,7 +126,7 @@ const RejectManage = (props) => {
                 <CPagination
                     activePage={pageSize.page}
                     onActivePageChange={pageChange}
-                    pages={data?.totalPages || 1}
+                    pages={data?.totalPage || 1}
                     align="center"
                 />
             </CCardBody>

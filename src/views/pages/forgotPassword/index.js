@@ -139,7 +139,7 @@ const ForgotPassword = () => {
                                                                                 <CountDown
                                                                                     minuteStart={timeStart}
                                                                                     onClick={() => {
-                                                                                        getOtp({ to: phone })
+                                                                                        getOtp({ to: phone, platform: 1 });
                                                                                     }}
                                                                                     onStop={() => setDisableOTP(true)}
                                                                                 />

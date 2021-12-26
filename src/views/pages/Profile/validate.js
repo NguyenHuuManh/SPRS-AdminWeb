@@ -60,5 +60,13 @@ export const updateORG = Yup.object().shape({
             // console.log('regex3', regex3.test(nameStrim?.trim()));
             return regex.test(nameStrim?.trim()) || regex1.test(nameStrim?.trim()) || regex2.test(nameStrim?.trim()) || regex3.test(nameStrim?.trim());
         }),
+    founded: Yup.string().required("Ngày thành lập không được bỏ trống").nullable()
+        .test("test", "Ngày thành lập phải trước hoặc bằng ngày hiện tại", function () {
+            const { parent } = this;
+            const { founded } = parent;
+            console.log('founded', founded);
+            const currentDate = moment().format('DD-MM-YYYY');
+            return moment(founded, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
+        }),
     adressString: Yup.string().required("Không được bỏ trống").nullable(),
 });
