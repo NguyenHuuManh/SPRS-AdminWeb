@@ -136,16 +136,14 @@ const UserManager = () => {
                                                     <td>{item.username}</td>
                                                     <td>{item.full_name}</td>
                                                     <td>{item.phone}</td>
+                                                    <td>{item?.isActive ? 'Đang hoạt động' : 'Bị khóa'}</td>
                                                     <td>
-                                                        {item?.status == 'Actived' ? "Đang hoạt động" : "Tài khoản bị khóa"}
-                                                    </td>
-                                                    <td>
-                                                        {item?.status == 'Actived' ? (
-                                                            <CButton color="secondary" onClick={() => { unActive(item?.id) }} style={{ width: 200 }}>
+                                                        {item?.isActive ? (
+                                                            <CButton color="danger" onClick={() => { unActive(item?.id) }} style={{ width: 200 }}>
                                                                 Khóa tài khoản
                                                             </CButton>
                                                         ) : (
-                                                            <CButton color="success" onClick={() => { active(item.id) }} style={{ width: 200 }}>
+                                                            <CButton color="primary" onClick={() => { active(item.id) }} style={{ width: 200 }}>
                                                                 Mở khóa tài khoản
                                                             </CButton>
                                                         )}
