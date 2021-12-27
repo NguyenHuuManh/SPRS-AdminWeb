@@ -45,7 +45,7 @@ export const register = Yup.object().shape({
         .test("test", "Ngày sinh phải trước hoặc bằng ngày hiện tại", function () {
             const { parent } = this;
             const { dob } = parent;
-            console.log('dob', dob)
+            // console.log('dob', dob)
             const currentDate = moment().format('DD-MM-YYYY');
             return moment(dob, 'DD-MM-YYYY').isSameOrBefore(moment(currentDate, 'DD-MM-YYYY'))
         }),
@@ -64,8 +64,7 @@ export const register = Yup.object().shape({
         }),
     city: Yup.string().required("Tỉnh/Thành phố không được bỏ trống").nullable(),
     district: Yup.string().required("Quận/Huyện không được bỏ trống").nullable(),
-    subDistrict: Yup.string().required("Xã phường không được bỏ trống").nullable(),
-    // addressLine: Yup.string().required("địa chi không được bỏ trống").nullable(),
+    subDistrict: Yup.string().required("Xã/Phường không được bỏ trống").nullable(),
     adressString: Yup.string().required("Địa chỉ tổ chức không được bỏ trống").nullable(),
     rePassWord: Yup.mixed().required("Xác minh mật khẩu").test("test", "Mật khẩu không khớp", function () {
         const { parent } = this;

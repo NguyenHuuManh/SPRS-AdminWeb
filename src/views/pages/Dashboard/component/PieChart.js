@@ -52,9 +52,7 @@ const Piechart = () => {
                     maintainAspectRatio: false,
                 }}
             />
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <CCardTitle>Biểu đồ tổng các điểm của toàn hệ thống</CCardTitle>
-            </div>
+
         </>
     )
 }

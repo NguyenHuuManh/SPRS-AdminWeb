@@ -65,9 +65,7 @@ const CityChart = () => {
                 }}
                 multiple={false}
             />
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <CCardTitle>Biểu đồ thống kê điểm tại các tỉnh thành</CCardTitle>
-            </div>
+
         </div>
     )
 }

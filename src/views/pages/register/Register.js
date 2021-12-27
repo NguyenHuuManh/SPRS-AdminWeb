@@ -152,7 +152,7 @@ const Register = () => {
                   >
                     {({ submitForm, values }) => (
                       <>
-                        {console.log('valuess', values)}
+                        {/* {console.log('valuess', values)} */}
                         <Field
                           horizontal
                           component={AppSelectGroupsRegister}

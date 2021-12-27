@@ -27,13 +27,16 @@ export default memo((props) => {
 
 
     const callGetHuyen = () => {
+
         if (!idTinh || isEmpty(idTinh + "") || isNull(idTinh)) {
+            // console.log('valueFiled vao if', field);
             setData([]);
             setFieldValue(name, "");
             functionProps && functionProps({});
             return
         };
         apiDistrict(idTinh).then((res) => {
+            // console.log('valueFiled vao call', field);
             if (res?.status == 200) {
                 if (res.data.code == "200") {
                     setData(res?.data?.obj);
@@ -48,7 +51,7 @@ export default memo((props) => {
     }, [idTinh]);
 
     const selectedOption =
-        field && data?.find((option) => option?.id == field?.value);
+        field && data?.find((option) => option?.id + '' == field?.value + '');
     const selectedDefault = data?.find(
         (option) => option?.values == defaultValue
     );
@@ -56,7 +59,7 @@ export default memo((props) => {
 
     const patchedOnChange = (selectedOption) => {
         //
-        const selectedValue = selectedOption ? selectedOption.id : selectedOption;
+        const selectedValue = selectedOption ? selectedOption.id : '';
 
         const changeEvent = {
             target: {
@@ -73,10 +76,6 @@ export default memo((props) => {
         patchedOnChange(selectedOption);
     }, [data])
 
-    // useEffect(() => {
-    //     if (isEmpty(field?.value) || isUndefined(field?.value)) return;
-    //     // patchedOnChange(selectedOption);
-    // }, [field]);
 
 
     const renderSelectType = () => {

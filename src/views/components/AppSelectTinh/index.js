@@ -62,7 +62,7 @@ export default memo((props: Props) => {
 
     const patchedOnChange = (selectedOption) => {
         //
-        const selectedValue = selectedOption ? selectedOption.id : selectedOption;
+        const selectedValue = selectedOption ? selectedOption.id : '';
 
         const changeEvent = {
             target: {

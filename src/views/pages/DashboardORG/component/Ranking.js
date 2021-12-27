@@ -31,7 +31,7 @@ const Ranking = (props) => {
     return (
         <>
             <CChartBar
-                style={{ height: 300 }}
+                style={{ height: 360 }}
                 datasets={[{
                     barThickness: 50,
                     label: "Top 5",
@@ -53,9 +53,7 @@ const Ranking = (props) => {
                     responsive: true
                 }}
             />
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                <CCardTitle>5 thành viên hoạt động nhiều nhất</CCardTitle>
-            </div>
+
         </>
     )
 }
