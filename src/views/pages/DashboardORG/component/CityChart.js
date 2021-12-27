@@ -23,7 +23,7 @@ const CityChart = () => {
         return {
             label: filterLable(key),
             backgroundColor: filterColor(key),
-            data: value.map((e) => e.total),
+            data: value.map((e) => e),
         };
     })
     const getReport = (values) => {

@@ -9,7 +9,7 @@ const CityChart = () => {
     const filterLable = (key) => {
         if (key === 'ReliefPoint') return "Cứu trợ"
         if (key === 'StorePoint') return "Cửa hàng"
-        if (key === 'SOS') return "Cứu trợ"
+        if (key === 'SOS') return "SOS"
         if (key === 'Organization') return "Tổ chức"
     }
 
