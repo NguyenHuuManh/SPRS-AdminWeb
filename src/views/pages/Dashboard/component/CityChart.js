@@ -21,6 +21,10 @@ const CityChart = () => {
     }
     const datasets = isEmpty(data.dataChart) ? [] : Object.entries(data.dataChart).map(([key, value]) => {
         return {
+            barPercentage: 0.5,
+            barThickness: 20,
+            // maxBarThickness: 8,
+            // minBarLength: 2,
             label: filterLable(key),
             backgroundColor: filterColor(key),
             data: value,
@@ -44,21 +48,32 @@ const CityChart = () => {
     }, [])
 
     return (
-        <>
+        <div style={{ height: 7000 }}>
             <CChartHorizontalBar
+                style={{ height: 6900 }}
                 datasets={datasets}
                 labels={data.lables}
+                height={2000}
+                width={1000}
                 options={{
                     tooltips: {
                         enabled: true
-                    }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: { beginAtZero: true },
+                            display: true
+                        }],
+                    },
+                    maintainAspectRatio: false,
+                    responsive: true
                 }}
                 multiple={false}
             />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                 <CCardTitle>Biểu đồ thống kê điểm tại các tỉnh thành</CCardTitle>
             </div>
-        </>
+        </div>
     )
 }
 

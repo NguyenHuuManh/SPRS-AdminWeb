@@ -114,14 +114,14 @@ const CreateNotificaton = () => {
                                                     <Field
                                                         component={AppTimePicker}
                                                         name="open_time"
-                                                        title="thời gian mở cửa"
+                                                        title="Thời gian mở cửa"
                                                     />
                                                 </CCol>
                                                 <CCol md={6}>
                                                     <Field
                                                         component={AppTimePicker}
                                                         name="close_time"
-                                                        title="thời gian đóng cửa"
+                                                        title="Thời gian đóng cửa"
                                                     />
                                                 </CCol>
                                                 <CCol lg={12}>

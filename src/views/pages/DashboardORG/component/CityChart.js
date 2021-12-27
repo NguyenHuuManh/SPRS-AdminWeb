@@ -44,21 +44,31 @@ const CityChart = () => {
     }, [])
 
     return (
-        <>
+        <div style={{ height: 7000 }}>
             <CChartHorizontalBar
+                style={{ height: 6900 }}
                 datasets={datasets}
                 labels={data.lables}
                 options={{
                     tooltips: {
                         enabled: true
-                    }
+                    },
+                    scales: {
+                        yAxes: [{
+                            // stacked: true,
+                            ticks: { beginAtZero: true },
+                            display: true
+                        }],
+                    },
+                    maintainAspectRatio: false,
+                    responsive: true
                 }}
                 multiple={false}
             />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
                 <CCardTitle>Biểu đồ thống kê điểm tại các tỉnh thành</CCardTitle>
             </div>
-        </>
+        </div>
     )
 }
 

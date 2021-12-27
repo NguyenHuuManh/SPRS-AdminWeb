@@ -32,6 +32,7 @@ const Piechart = () => {
     return (
         <>
             <CChartPie
+                style={{ height: 300 }}
                 datasets={[
                     {
                         backgroundColor: [
@@ -44,11 +45,11 @@ const Piechart = () => {
                     }
                 ]}
                 labels={data.lableChart}
-
                 options={{
                     tooltips: {
                         enabled: true
-                    }
+                    },
+                    maintainAspectRatio: false,
                 }}
             />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>

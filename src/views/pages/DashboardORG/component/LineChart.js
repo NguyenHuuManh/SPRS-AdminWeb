@@ -28,6 +28,7 @@ const LineChart = (props) => {
     return (
         <>
             <CChartLine
+                style={{ height: 300 }}
                 datasets={datasets}
                 labels={data.lables}
                 options={{
@@ -35,12 +36,14 @@ const LineChart = (props) => {
                         enabled: true
                     },
                     scales: {
-                        xAxes: [{
-                            ticks: {
-                                display: false
-                            }
-                        }]
+                        yAxes: [{
+                            // stacked: true,
+                            ticks: { beginAtZero: true },
+                            display: true
+                        }],
                     },
+                    maintainAspectRatio: false,
+                    responsive: true
                 }}
             // multiple={false}
             />

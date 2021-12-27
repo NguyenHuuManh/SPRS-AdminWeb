@@ -30,12 +30,22 @@ const Barchart = (props) => {
     return (
         <>
             <CChartBar
+                style={{ height: 300 }}
                 datasets={datasets}
                 labels={data.lables}
                 options={{
                     tooltips: {
                         enabled: true
-                    }
+                    },
+                    scales: {
+                        yAxes: [{
+                            // stacked: true,
+                            ticks: { beginAtZero: true },
+                            display: true
+                        }],
+                    },
+                    maintainAspectRatio: false,
+                    responsive: true
                 }}
             // multiple={false}
             />

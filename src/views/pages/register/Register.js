@@ -18,6 +18,7 @@ import AppTimePicker from 'src/views/components/AppTimePicker'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import InputMaskField from 'src/views/components/InputMaskField'
+import InputPasswordField from 'src/views/components/InputPasswordField'
 import Mappicker from 'src/views/components/Mappicker'
 import OtpVerify from './OtpVerify'
 import { register } from './validate'
@@ -149,8 +150,9 @@ const Register = () => {
                       getOtp(values);
                     }}
                   >
-                    {({ submitForm }) => (
+                    {({ submitForm, values }) => (
                       <>
+                        {console.log('valuess', values)}
                         <Field
                           horizontal
                           component={AppSelectGroupsRegister}
@@ -239,18 +241,20 @@ const Register = () => {
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                          component={InputPasswordField}
                           name="password"
                           title="Mật khẩu"
                           type="password"
+                          isPassword
                         />
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                          component={InputPasswordField}
                           name="rePassWord"
                           title="Nhập lại mật khẩu"
                           type="password"
+                          isPassword
                         />
                         <CRow>
                           <CCol>

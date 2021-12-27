@@ -20,8 +20,8 @@ const UserTab = () => {
     const [temAddres, setTemAddress] = useState({});
     const upateProfile = (values) => {
         apiUpdateORG(values).then((res) => {
-            if (res.status == 200) {
-                if (res.data.code == "200") {
+            if (res?.status == 200) {
+                if (res?.data?.code == "200") {
                     appToast({
                         toastOptions: { type: "success" },
                         description: "Cập nhật thông tin thành công",
@@ -32,7 +32,7 @@ const UserTab = () => {
                 }
                 appToast({
                     toastOptions: { type: "error" },
-                    description: res.data.message,
+                    description: res?.data?.message,
                 });
                 return;
             }

@@ -6,6 +6,7 @@ import {
   CInputGroupText
 } from "@coreui/react";
 import React, { memo, useState } from "react";
+import { FaEye } from "react-icons/fa";
 
 export default memo((props) => {
   const { form, field, iconName, type, placeholder, title, horizontal, maxTitle, isPhone, iconRight, leftView, disabled, ...remainProps } = props;
@@ -14,7 +15,6 @@ export default memo((props) => {
   const onChange = (values) => {
     setFieldValue(name, values.target.value);
   };
-  const [security, setSecurity] = useState(true);
   return (
     <>
       {(!horizontal) && title && (
@@ -26,7 +26,7 @@ export default memo((props) => {
             <label className="inputTitle" style={{ width: maxTitle || 150 }}>{title}</label>
           )
         }
-        <CInputGroup className="mb-3" style={{ display: "flex" }}>
+        <CInputGroup className="mb-3" style={{ display: "flex" }} >
           {
             iconName && (
               <div style={{ marginRight: -1, width: "20%" }}>
@@ -62,22 +62,7 @@ export default memo((props) => {
             />
             {errors[name] && <div className="err-text" >{errors[name]}</div>}
           </div>
-          {/* {
-            type == "password" && (
-              <div style={{ marginRight: -1, width: "20%" }}>
 
-                <CInputGroupPrepend style={{ width: "100%" }}>
-                  <CInputGroupText style={{ borderTopRightRadius: 0, borderBottomRightRadius: 0, width: "100%", display: "flex", justifyContent: "center", backgroundColor: "#FFF" }} >
-                    {security ?
-                      <FaEye size={20} onClick={() => { setSecurity(!security) }} />
-                      :
-                      <FaEyeSlash size={20} onClick={() => { setSecurity(!security) }} />
-                    }
-                  </CInputGroupText>
-                </CInputGroupPrepend>
-              </div>
-            )
-          } */}
         </CInputGroup>
       </div>
     </>

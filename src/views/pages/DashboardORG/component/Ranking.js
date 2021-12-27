@@ -31,7 +31,9 @@ const Ranking = (props) => {
     return (
         <>
             <CChartBar
+                style={{ height: 300 }}
                 datasets={[{
+                    barThickness: 50,
                     label: "Top 5",
                     backgroundColor: 'blue',
                     data: data.dataChart,
@@ -40,7 +42,15 @@ const Ranking = (props) => {
                 options={{
                     tooltips: {
                         enabled: true
-                    }
+                    },
+                    scales: {
+                        yAxes: [{
+                            ticks: { beginAtZero: true },
+                            display: true
+                        }],
+                    },
+                    maintainAspectRatio: false,
+                    responsive: true
                 }}
             />
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>

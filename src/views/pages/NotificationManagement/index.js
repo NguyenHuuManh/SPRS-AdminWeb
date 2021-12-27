@@ -38,59 +38,6 @@ const NotificationManagement = () => {
     };
     return (
         <>
-            {/* <CCard>
-                <CCardHeader>
-                    Điều kiện tìm kiếm
-                </CCardHeader>
-                <CCardBody>
-                    <Formik
-                        initialValues={{
-                            datefrom: "",
-                            tinh: "",
-                            huyen: "",
-                            xa: "",
-                        }}
-                        onSubmit={(values) => {
-                            // setbody({ ...values })
-                        }}
-                    >
-                        {({ values }) => (
-                            <Form>
-                                <CRow>
-                                    <CCol md={3}>
-                                        <Field
-                                            component={AppSelectTinh}
-                                            title="Tỉnh/thành phố"
-                                            name="tinh"
-                                            functionProps={setTinh}
-                                        />
-                                    </CCol>
-                                    <CCol md={3}>
-                                        <Field
-                                            component={AppSelectHuyen}
-                                            title="Quận/huyện"
-                                            name="huyen"
-                                            idTinh={tinh?.id}
-                                            functionProps={setHuyen}
-                                        />
-                                    </CCol>
-                                    <CCol md={3}>
-                                        <Field
-                                            component={AppSelectXa}
-                                            title="Xã phường"
-                                            name="xa"
-                                            idHuyen={huyen?.id}
-                                        />
-                                    </CCol>
-                                    <CCol md={3} className="d-flex justify-content-center align-items-center">
-                                        <CButton type="submit" color="secondary" >Tìm kiếm</CButton>
-                                    </CCol>
-                                </CRow>
-                            </Form>
-                        )}
-                    </Formik>
-                </CCardBody>
-            </CCard> */}
             <CCard>
                 <CCardHeader>
                     <CRow>
@@ -103,7 +50,7 @@ const NotificationManagement = () => {
                     <table className="table table-hover">
                         <thead className="table-active">
                             <th>Tên thông báo</th>
-                            <th>Loại người dùng được gửi</th>
+                            <th>Ngày gửi</th>
                             <th>Nội dung</th>
                         </thead>
                         <tbody>
@@ -114,8 +61,8 @@ const NotificationManagement = () => {
                                             key={item.id}
                                         >
                                             <td>{item.title}</td>
-                                            <td>{item.message}</td>
                                             <td>{item.create_time}</td>
+                                            <td>{item.message}</td>
                                         </tr>
                                     )
                                 })

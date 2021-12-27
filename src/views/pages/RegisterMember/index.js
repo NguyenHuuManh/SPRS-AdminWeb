@@ -17,6 +17,7 @@ import AppTimePicker from 'src/views/components/AppTimePicker'
 import { appToast } from 'src/views/components/AppToastContainer'
 import InputField from 'src/views/components/InputField'
 import InputMaskField from 'src/views/components/InputMaskField'
+import InputPasswordField from 'src/views/components/InputPasswordField'
 import Mappicker from 'src/views/components/Mappicker'
 import OtpVerify from './OtpVerify'
 import { register } from './validate'
@@ -24,11 +25,7 @@ import { register } from './validate'
 const RegisterMember = () => {
   const [tinh, setTinh] = useState({});
   const [huyen, setHuyen] = useState({});
-  const [body, setBody] = useState({});
-  const [timeStart, setTimeStart] = useState({});
-  const [disableOTP, setDisableOTP] = useState(true);
-  const [otpModal, setOtpModal] = useState(false);
-  const [loading, setLoading] = useState(false);
+  const [security, setSecurity] = useState(true);
 
   const singup = (values) => {
     apiSigupUserORG(values).then((res) => {
@@ -168,18 +165,20 @@ const RegisterMember = () => {
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                          component={InputPasswordField}
                           name="password"
                           title="Mật khẩu"
                           type="password"
+                          isPassword
                         />
                         <Field
                           maxTitle={170}
                           horizontal
-                          component={InputField}
+                          component={InputPasswordField}
                           name="rePassWord"
                           title="Nhập lại mật khẩu"
                           type="password"
+                          isPassword
                         />
                         <CRow>
                           <CCol>
@@ -189,16 +188,6 @@ const RegisterMember = () => {
                       </>
                     )}
                   </Formik>
-                  {/* <OtpVerify
-                    isOpen={otpModal}
-                    setIsOpen={setOtpModal}
-                    body={body}
-                    getOtp={getOtp}
-                    setTimeStart={setTimeStart}
-                    timeStart={timeStart}
-                    disableOTP={disableOTP}
-                    setDisableOTP={setDisableOTP}
-                  /> */}
                 </CForm>
               </CCardBody>
 

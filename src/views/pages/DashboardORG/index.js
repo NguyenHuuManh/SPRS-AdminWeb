@@ -8,21 +8,18 @@ const Dashboard = () => {
     return (
         <>
             <CRow>
-                <CCol lg={6} style={{ paddingBottom: 25 }}>
-                    <div style={{ backgroundColor: "#FFFF", height: "100%" }}>
-                        <CityChart />
-                    </div>
-                </CCol>
-                <CCol lg={6} style={{ paddingBottom: 25 }}>
+                <CCol lg={12} style={{ paddingBottom: 25 }}>
                     <div style={{ backgroundColor: "#FFFF", height: "100%" }}>
                         <Ranking />
                     </div>
-
                 </CCol>
-            </CRow>
-            <CRow>
                 <CCol lg={12}>
                     <FormSearch />
+                </CCol>
+                <CCol lg={12} style={{ paddingBottom: 25 }}>
+                    <div style={{ backgroundColor: "#FFFF", height: "100%" }}>
+                        <CityChart />
+                    </div>
                 </CCol>
             </CRow>
         </>
