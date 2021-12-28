@@ -107,7 +107,7 @@ const RequestManage = (props) => {
             <CCardHeader>
                 <CRow>
                     <CCol md={6}>
-                        Danh sách tổ chức
+                        Danh sách yêu cầu đăng ký
                     </CCol>
 
                 </CRow>
